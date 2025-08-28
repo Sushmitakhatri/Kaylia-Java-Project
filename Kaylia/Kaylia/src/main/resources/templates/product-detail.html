@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title id="page-title">Product Details - Kaylia Skincare</title>
+    <meta name="description" content="Discover premium skincare products from Kaylia. Transform your skin with our clinically proven formulas.">
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+    <style>
+        .product-detail-section {
+            padding: 3rem 0;
+            min-height: calc(100vh - 200px);
+        }
+
+        .product-detail-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: start;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .product-image-main {
+            width: 100%;
+            height: 435px;
+            object-fit: cover;
+            border-radius: 0.5rem;
+            box-shadow: var(--shadow-soft);
+        }
+
+        .product-info {
+            padding: 2rem 0;
+        }
+
+        .product-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 4rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .product-rating {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .product-price {
+            font-size: 4rem;
+            font-weight: 700;
+            color: hsl(var(--primary));
+            margin-bottom: 1.5rem;
+        }
+
+        .product-description {
+            font-size: 2rem;
+            color: hsl(var(--muted-foreground));
+            line-height: 1.6;
+            margin-bottom: 2rem;
+        }
+
+        .quantity-section {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .quantity-controls {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .quantity-btn {
+            width: 2.5rem;
+            height: 2.5rem;
+            border: 1px solid hsl(var(--border));
+            background: hsl(var(--background));
+            border-radius: 0.375rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: var(--transition-smooth);
+        }
+
+        .quantity-btn:hover {
+            background: hsl(var(--accent));
+        }
+
+        .quantity-display {
+            width: 3rem;
+            text-align: center;
+            font-weight: 500;
+            font-size: 1.125rem;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .add-to-cart-btn {
+            flex: 1;
+        }
+
+        .wishlist-btn {
+            width: 3rem;
+            height: 3rem;
+        }
+
+        .tabs-container {
+            margin-top: 1rem;
+        }
+
+        .tabs-nav {
+            display: flex;
+            border-bottom: 1px solid hsl(var(--border));
+            margin-bottom: 2rem;
+        }
+
+        .tab-btn {
+            padding: 1rem 1.5rem;
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-weight: 500;
+            color: hsl(var(--muted-foreground));
+            border-bottom: 2px solid transparent;
+            transition: var(--transition-smooth);
+        }
+
+        .tab-btn.active {
+            color: hsl(var(--primary));
+            border-bottom-color: hsl(var(--primary));
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .benefits-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .benefits-list li {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 0.75rem;
+        }
+
+        .benefits-list li::before {
+            content: '';
+            width: 0.5rem;
+            height: 0.5rem;
+            background: hsl(var(--primary));
+            border-radius: 50%;
+            margin-right: 0.75rem;
+            margin-top: 0.5rem;
+            flex-shrink: 0;
+        }
+
+        .ingredients-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .ingredient-tag {
+            background: hsl(var(--muted));
+            padding: 0.5rem 1rem;
+            border-radius: 1.5rem;
+            font-size: 0.875rem;
+            color: hsl(var(--foreground));
+        }
+
+        @media (max-width: 1024px) {
+            .product-detail-grid {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .product-detail-section {
+                padding: 2rem 0;
+            }
+
+            .action-buttons {
+                flex-direction: column;
+            }
+
+            .wishlist-btn {
+                width: 100%;
+                height: auto;
+                padding: 0.75rem;
+            }
+
+            .quantity-section {
+                justify-content: center;
+            }
+
+            .product-title {
+                font-size: 1.5rem;
+            }
+
+            .product-price {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+<!-- Header -->
+<header th:insert="navbar.html"></header>
+
+<!-- Product Detail Section -->
+<!-- Product Detail Section -->
+<section class="product-detail-section" >
+    <div class="container">
+        <div class="product-detail-grid" th:data-productid="${product.id}">
+
+            <!-- Product Image -->
+            <div>
+                <img id="product-image" th:src="@{/image/{id}(id=${product.id})}"
+                     alt="image"
+                     class="product-image-main">
+            </div>
+
+            <!-- Product Info -->
+            <div class="product-info">
+                <h1 id="product-title" style="font-size: 1.85rem; font-weight: bold" class="product-title" th:text="${product.name}">Product Name</h1>
+
+                <div class="product-rating">
+                    <div class="star-rating">
+                        <span class="star filled">★</span>
+                        <span class="star filled">★</span>
+                        <span class="star filled">★</span>
+                        <span class="star filled">★</span>
+                        <span class="star filled">★</span>
+                    </div>
+                    <span class="text-muted">(234 reviews)</span>
+                </div>
+
+                <div id="product-price" class="product-price">Rs <span th:text="${product.price}"></span></div>
+
+                <p id="product-description" class="product-description" style="font-size: 1rem" th:text="${product.description}">
+                    A powerful vitamin C serum that brightens skin and reduces dark spots.
+                    Formulated with 20% stabilized vitamin C, hyaluronic acid, and botanical extracts
+                    for maximum efficacy and gentle application.
+                </p>
+
+                <div style="margin-top: 10px" class="quantity-section">
+                    <div class="quantity-controls">
+                        <button class="quantity-btn" onclick="updateQuantity(-1)">
+                            <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 12H4"/>
+                            </svg>
+                        </button>
+                        <span class="quantity-display" id="quantity">1</span>
+                        <button class="quantity-btn" onclick="updateQuantity(1)">
+                            <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="action-buttons">
+                    <button class="btn btn-primary btn-lg add-to-cart-btn" onclick="addToCartProduct()">
+                        Add to Cart
+                    </button>
+
+                    <button class="btn btn-outline wishlist-btn" onclick="toggleWishlist()" aria-label="Add to wishlist">
+                        <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
+                        </svg>
+                    </button>
+                </div>
+
+                <!-- Tabs -->
+                <div class="tabs-container">
+                    <div class="tabs-nav">
+                        <button class="tab-btn active" onclick="switchTab('description')">Description</button>
+                        <button class="tab-btn" onclick="switchTab('ingredients')">Ingredients</button>
+                        <button class="tab-btn" onclick="switchTab('reviews')">Reviews</button>
+                    </div>
+
+                    <!-- Description Tab -->
+                    <div id="description-tab" class="tab-content active">
+                        <h3 style="font-weight: 600; margin-bottom: 1rem;">Benefits</h3>
+                        <ul class="benefits-list" th:each="benifit: ${product.benefits}">
+                            <li th:text="${benifit}"></li>
+                        </ul>
+
+                        <h3 style="font-weight: 600; margin: 2rem 0 1rem;">How to Use</h3>
+                        <p class="text-muted" style="line-height: 1.6;" th:text="${product.howToUse}">
+                            Apply 2-3 drops to clean skin every morning. Gently pat into face and neck,
+                            avoiding the eye area. Always follow with SPF during the day. Start with
+                            every other day and gradually increase to daily use as tolerated.
+                        </p>
+                    </div>
+
+                    <!-- Ingredients Tab -->
+                    <div id="ingredients-tab" class="tab-content">
+                        <h3 style="font-weight: 600; margin-bottom: 1rem;">Key Ingredients</h3>
+                        <div class="ingredients-grid" >
+                            <span class="ingredient-tag"
+                                  th:each="ingredient, iterStat: ${product.ingredients}"
+                                  th:if="${iterStat.index < 4}"
+                                  th:text="${ingredient}">
+                            </span>
+                        </div>
+
+                        <h3 style="font-weight: 600; margin: 2rem 0 1rem;">Full Ingredient List</h3>
+                        <p class="text-muted" style="font-size: 0.875rem; line-height: 1.6;" >
+                            <span th:each="ingredient, iterStat : ${product.ingredients}"
+                                  th:text="${ingredient + (iterStat.last ? '' : ', ')}"></span>
+                        </p>
+                    </div>
+
+                    <!-- Reviews Tab -->
+                    <div id="reviews-tab" class="tab-content">
+                        <h3 style="font-weight: 600; margin-bottom: 1rem;">Customer Reviews</h3>
+                        <div style="background: hsl(var(--muted)); padding: 2rem; border-radius: 0.5rem; text-align: center;">
+                            <p class="text-muted">Customer reviews are coming soon!</p>
+                            <p class="text-muted" style="font-size: 0.875rem; margin-top: 0.5rem;">
+                                Be the first to share your experience with this product.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<!-- Related Products Section -->
+<section class="section section-muted">
+    <div class="container">
+        <div class="text-center mb-8">
+            <h2 class="font-serif" style="font-size: 2.5rem; font-weight: 700; margin-bottom: 1rem;">
+                You Might Also Like
+            </h2>
+            <p style="font-size: 1.25rem; color: hsl(var(--muted-foreground));">
+                Complete your skincare routine with these complementary products
+            </p>
+        </div>
+
+        <div class="product-grid grid-md-3">
+            <!-- Related Product 1 -->
+            <div class="product-card">
+                <div class="product-image">
+                    <img src="https://images.unsplash.com/photo-1556228578-dd6b68d2bf17?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Retinol Renewal Night Cream">
+                    <button class="product-fav" aria-label="Add to wishlist">
+                        <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
+                        </svg>
+                    </button>
+                </div>
+
+                <div class="star-rating">
+                    <span class="star filled">★</span>
+                    <span class="star filled">★</span>
+                    <span class="star filled">★</span>
+                    <span class="star filled">★</span>
+                    <span class="star filled">★</span>
+                    <span class="text-muted" style="margin-left: 0.5rem; font-size: 0.875rem;">(156)</span>
+                </div>
+
+                <div class="product-tags">
+                    <span>Retinol, Peptides, Niacinamide</span>
+                </div>
+
+                <a href="#">
+                    <h3 class="product-title">Retinol Renewal Night Cream</h3>
+                </a>
+
+                <p class="product-description">Advanced anti-aging treatment with gentle retinol and peptides for smoother, younger-looking skin.</p>
+
+                <div class="product-prices">
+                    <span class="product-price">$65</span>
+                </div>
+
+                <button class="btn btn-outline btn-sm">
+                    Add to Cart
+                </button>
+            </div>
+
+            <!-- Related Product 2 -->
+            <div class="product-card">
+                <div class="product-image">
+                    <img src="https://images.unsplash.com/photo-1556229010-6c3f2c9ca5f8?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Hyaluronic Acid Serum">
+                    <button class="product-fav" aria-label="Add to wishlist">
+                        <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
+                        </svg>
+                    </button>
+                </div>
+
+                <div class="star-rating">
+                    <span class="star filled">★</span>
+                    <span class="star filled">★</span>
+                    <span class="star filled">★</span>
+                    <span class="star filled">★</span>
+                    <span class="star">★</span>
+                    <span class="text-muted" style="margin-left: 0.5rem; font-size: 0.875rem;">(203)</span>
+                </div>
+
+                <div class="product-tags">
+                    <span>Hyaluronic Acid, Ceramides, Glycerin</span>
+                </div>
+
+                <a href="#">
+                    <h3 class="product-title">Hyaluronic Acid Serum</h3>
+                </a>
+
+                <p class="product-description">Intensely hydrating serum that delivers deep moisture to plump and dewy skin.</p>
+
+                <div class="product-prices">
+                    <span class="product-price">$38</span>
+                </div>
+
+                <button class="btn btn-outline btn-sm">
+                    Add to Cart
+                </button>
+            </div>
+
+            <!-- Related Product 3 -->
+            <div class="product-card">
+                <div class="product-image">
+                    <img src="https://images.unsplash.com/photo-1556228453-efd6c1ff04f6?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Gentle Cleanser">
+                    <button class="product-fav" aria-label="Add to wishlist">
+                        <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
+                        </svg>
+                    </button>
+                </div>
+
+                <div class="star-rating">
+                    <span class="star filled">★</span>
+                    <span class="star filled">★</span>
+                    <span class="star filled">★</span>
+                    <span class="star filled">★</span>
+                    <span class="star">★</span>
+                    <span class="text-muted" style="margin-left: 0.5rem; font-size: 0.875rem;">(124)</span>
+                </div>
+
+                <div class="product-tags">
+                    <span>Niacinamide, Ceramides, Glycerin</span>
+                </div>
+
+                <a href="#">
+                    <h3 class="product-title">Gentle Foam Cleanser</h3>
+                </a>
+
+                <p class="product-description">A gentle yet effective daily cleanser that removes impurities without stripping natural oils.</p>
+
+                <div class="product-prices">
+                    <span class="product-price">$28</span>
+                </div>
+
+                <button class="btn btn-outline btn-sm">
+                    Add to Cart
+                </button>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Footer -->
+<div th:insert="footer.html"></div>
+
+<script th:src="@{/js/script.js}"></script>
+<script>
+
+    let quantity = 1;
+    const productDiv = document.querySelector('.product-detail-grid');
+    const productId = productDiv.dataset.productid;
+
+
+    function updateQuantity(change) {
+        quantity = Math.max(1, quantity + change);
+        document.getElementById('quantity').textContent = quantity;
+    }
+
+    async function addToCartProduct(){
+
+        try{
+            const cartData = {
+                productId: productId,
+                quantity: quantity
+            };
+
+            const response = await fetch ('/add-to-cart',{
+                method : 'POST',
+                headers : { 'Content-Type': 'application/json'},
+                body: JSON.stringify(cartData)
+            });
+
+            const result = await response.json();
+
+            if (response.ok){
+                showToast('Product added to cart!');
+            }
+
+        }catch (error){
+            console.error('Add to cart error:', error);
+        }
+    }
+
+
+    function toggleWishlist() {
+        showToast('Added to wishlist!');
+    }
+
+    function switchTab(tabName) {
+        // Hide all tab contents
+        const tabContents = document.querySelectorAll('.tab-content');
+        tabContents.forEach(content => content.classList.remove('active'));
+
+        // Remove active class from all tab buttons
+        const tabButtons = document.querySelectorAll('.tab-btn');
+        tabButtons.forEach(btn => btn.classList.remove('active'));
+
+        // Show selected tab content
+        document.getElementById(tabName + '-tab').classList.add('active');
+
+        // Add active class to clicked tab button
+        event.target.classList.add('active');
+    }
+</script>
+</body>
+</html>

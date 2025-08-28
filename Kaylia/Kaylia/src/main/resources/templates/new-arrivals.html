@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>New Arrivals - Kaylia Skincare</title>
+    <meta name="description" content="Discover the latest additions to Kaylia's skincare collection. Shop our newest serums, moisturizers, and treatments for innovative skincare solutions.">
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+    <style>
+        .filters-section {
+            background: hsl(var(--muted) / 0.3);
+            padding: 2rem 0;
+            border-bottom: 1px solid hsl(var(--border));
+        }
+        
+        .filters-container {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+        }
+        
+        .filter-group {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        .filter-buttons {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+        
+        .filter-btn {
+            padding: 0.5rem 1rem;
+            border: 1px solid hsl(var(--border));
+            background: hsl(var(--background));
+            color: hsl(var(--foreground));
+            border-radius: 0.375rem;
+            cursor: pointer;
+            transition: var(--transition-smooth);
+            font-size: 0.875rem;
+        }
+        
+        .filter-btn:hover,
+        .filter-btn.active {
+            background: hsl(var(--primary));
+            color: hsl(var(--primary-foreground));
+            border-color: hsl(var(--primary));
+        }
+        
+        .search-bar {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            max-width: 20rem;
+            width: 100%;
+        }
+        
+        .search-input {
+            flex: 1;
+            padding: 0.5rem 0.75rem;
+            border: 1px solid hsl(var(--border));
+            border-radius: 0.375rem;
+            background: hsl(var(--background));
+            color: hsl(var(--foreground));
+        }
+        
+        .sort-select {
+            padding: 0.5rem 0.75rem;
+            border: 1px solid hsl(var(--border));
+            border-radius: 0.375rem;
+            background: hsl(var(--background));
+            color: hsl(var(--foreground));
+            cursor: pointer;
+        }
+        
+        .products-section {
+            padding: 3rem 0;
+        }
+        
+        .products-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+        
+        .results-count {
+            color: hsl(var(--muted-foreground));
+        }
+        
+        @media (max-width: 768px) {
+            .filters-container {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            
+            .filter-group {
+                justify-content: center;
+            }
+            
+            .products-header {
+                flex-direction: column;
+                gap: 1rem;
+                align-items: stretch;
+            }
+        }
+    </style>
+    <style>
+        .filters-section {
+            background: hsl(var(--muted) / 0.3);
+            padding: 2rem 0;
+            border-bottom: 1px solid hsl(var(--border));
+        }
+        
+        .filters-container {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+        }
+        
+        .filter-group {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        .filter-buttons {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+        
+        .filter-btn {
+            padding: 0.5rem 1rem;
+            border: 1px solid hsl(var(--border));
+            background: hsl(var(--background));
+            color: hsl(var(--foreground));
+            border-radius: 0.375rem;
+            cursor: pointer;
+            transition: var(--transition-smooth);
+            font-size: 0.875rem;
+        }
+        
+        .filter-btn:hover,
+        .filter-btn.active {
+            background: hsl(var(--primary));
+            color: hsl(var(--primary-foreground));
+            border-color: hsl(var(--primary));
+        }
+        
+        .search-bar {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            max-width: 20rem;
+            width: 100%;
+        }
+        
+        .search-input {
+            flex: 1;
+            padding: 0.5rem 0.75rem;
+            border: 1px solid hsl(var(--border));
+            border-radius: 0.375rem;
+            background: hsl(var(--background));
+            color: hsl(var(--foreground));
+        }
+        
+        .sort-select {
+            padding: 0.5rem 0.75rem;
+            border: 1px solid hsl(var(--border));
+            border-radius: 0.375rem;
+            background: hsl(var(--background));
+            color: hsl(var(--foreground));
+            cursor: pointer;
+        }
+        
+        .products-section {
+            padding: 3rem 0;
+        }
+        
+        .products-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+        
+        .results-count {
+            color: hsl(var(--muted-foreground));
+        }
+        
+        @media (max-width: 768px) {
+            .filters-container {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            
+            .filter-group {
+                justify-content: center;
+            }
+            
+            .products-header {
+                flex-direction: column;
+                gap: 1rem;
+                align-items: stretch;
+            }
+        }
+    </style>
+</head>
+<body>
+<!-- Header -->
+<header th:insert="navbar.html"></header>
+<!-- End header -->
+
+    <!-- Page Header & Main Layout -->
+    <section class="section" style="padding: 3rem 0;">
+        <div class="container">
+            <div class="products-layout">
+                <!-- Sidebar -->
+                <aside class="products-sidebar">
+                    <div class="sidebar-group">
+                        <h3>Categories</h3>
+                        <form id="category-filter">
+                            <label><input type="radio" name="category" value="all" checked> All</label>
+                            <label><input type="radio" name="category" value="cleansers"> Cleansers</label>
+                            <label><input type="radio" name="category" value="serums"> Serums</label>
+                            <label><input type="radio" name="category" value="moisturizers"> Moisturizers</label>
+                            <label><input type="radio" name="category" value="toners"> Toners</label>
+                            <label><input type="radio" name="category" value="eye care"> Eye Care</label>
+                            <label><input type="radio" name="category" value="sunscreen"> Sunscreen</label>
+                        </form>
+                    </div>
+                    <div class="sidebar-group">
+                        <h3>Price Range</h3>
+                        <form id="price-filter">
+                            <label><input type="checkbox" name="price" value="under-1000"> Under Rs 1000</label>
+                            <label><input type="checkbox" name="price" value="1000-2500"> Rs 1000 - Rs 2500</label>
+                            <label><input type="checkbox" name="price" value="2500-3200"> Rs 2500 - Rs 3200</label>
+                            <label><input type="checkbox" name="price" value="over-3200"> Over Rs 3200</label>
+                        </form>
+                    </div>
+                    <button class="btn btn-outline sidebar-clear" id="clear-filters" type="button">Clear All Filters</button>
+                </aside>
+                <!-- Main Content -->
+                <main class="products-main">
+                    <div class="products-header-row">
+                        <div>
+                            <h1 class="font-serif" style="font-size: 2.5rem; font-weight: 700; margin-bottom: 0.25rem;">New Arrivals</h1>
+                            <p style="font-size: 1.1rem; color: hsl(var(--muted-foreground)); max-width: 32rem; margin: 0;">Discover our latest skincare innovations designed for modern beauty routines</p>
+                        </div>
+                        <div class="products-header-controls">
+                            <div class="search-bar">
+                                <input type="text" id="search-input" class="search-input" placeholder="Search products..." onkeyup="searchProducts()">
+                                <button class="btn btn-primary btn-sm" onclick="handleSearch(document.getElementById('search-input').value)">
+                                    <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <circle cx="11" cy="11" r="8"/>
+                                        <path d="m21 21-4.35-4.35"/>
+                                    </svg>
+                                </button>
+                            </div>
+                            <select class="sort-select" onchange="sortProducts(this.value)">
+                                <option value="featured">Featured</option>
+                                <option value="price-low">Price: Low to High</option>
+                                <option value="price-high">Price: High to Low</option>
+                                <option value="name">Name: A to Z</option>
+                                <option value="rating">Customer Rating</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="products-count-row">
+                        <span id="results-count">Showing 6 of 6 products</span>
+                    </div>
+                    <div class="product-grid" id="products-container">
+                            <!---------Dynamically loaded images ------------>
+                            <div th:each="product : ${products}"
+                                 class="product-card"
+                                 th:attr="data-category=${product.categories},
+                                      data-price=${product.price},
+                                      data-name=${product.name}
+                            ">
+
+                                <!-- Product Image -->
+                                <div class="product-image">
+                                    <img th:src="@{/image/{id}(id=${product.id})}" th:alt="${product.name}">
+                                    <button class="product-fav" aria-label="Add to wishlist">
+                                        <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
+                                        </svg>
+                                    </button>
+                                </div>
+
+                                <!-- Rating -->
+                                <div class="star-rating">
+                                    <span class="star filled">★</span>
+                                    <span class="star filled">★</span>
+                                    <span class="star filled">★</span>
+                                    <span class="star filled">★</span>
+                                    <span class="star filled">★</span>
+                                    <span class="text-muted" style="margin-left: 0.5rem; font-size: 0.875rem;" th:inline="javascript">([[${T(java.lang.Math).toIntExact(T(java.lang.Math).floor(T(java.lang.Math).random() * 300) + 1)}]])</span>
+                                </div>
+
+                                <!-- Tags -->
+                                <div class="product-tags">
+                                    <span th:each="ingredient, iterStat : ${product.ingredients}"
+                                          th:text="${ingredient + (iterStat.last || iterStat.index==3 ? '' : ', ')}"
+                                          th:if="${iterStat.index < 4}"
+                                    ></span>
+                                </div>
+
+                                <!-- Title -->
+                                <a th:href="@{/product-detail/{id}(id=${product.id})}">
+                                    <h3 class="product-title" th:text="${product.name}"></h3>
+                                </a>
+
+                                <!--Description -->
+                                <p class="product-description" th:text="${product.description}"></p>
+
+                                <!-- Price -->
+                                <div class="product-prices">
+                                    <span class="product-price" th:text="'Rs ' + ${T(java.lang.Math).round(product.price)}"></span>
+                                </div>
+
+                                <!-- Add to Cart -->
+                                <button th:attr="data-id=${product.id}" onclick="addToCartProduct(this.dataset.id)" class="btn btn-outline btn-sm">
+                                    Add to Cart
+                                </button>
+                            </div>
+                    </div>
+                </main>
+            </div>
+        </div>
+    </section>
+
+    <!-- Benefits Section -->
+    <section class="section section-muted">
+        <div class="container">
+            <div class="text-center mb-8">
+                <h2 class="font-serif" style="font-size: 2.5rem; font-weight: 700; margin-bottom: 1rem;">
+                    Why Our New Products?
+                </h2>
+                <p style="font-size: 1.25rem; color: hsl(var(--muted-foreground)); max-width: 32rem; margin: 0 auto;">
+                    Advanced formulations with cutting-edge ingredients
+                </p>
+            </div>
+            
+            <div class="grid grid-md-3">
+                <div class="card">
+                    <div class="card-content text-center">
+                        <div style="width: 4rem; height: 4rem; background: var(--gradient-rose); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1.5rem;">
+                            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+                                <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                            </svg>
+                        </div>
+                        <h3 style="font-weight: 600; font-size: 1.25rem; margin-bottom: 1rem;">Latest Innovation</h3>
+                        <p class="text-muted">Featuring the newest breakthrough ingredients in skincare science</p>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div class="card-content text-center">
+                        <div style="width: 4rem; height: 4rem; background: var(--gradient-rose); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1.5rem;">
+                            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+                                <path d="M9 12l2 2 4-4"/>
+                                <circle cx="12" cy="12" r="9"/>
+                            </svg>
+                        </div>
+                        <h3 style="font-weight: 600; font-size: 1.25rem; margin-bottom: 1rem;">Clinically Tested</h3>
+                        <p class="text-muted">Each new product undergoes rigorous testing for safety and efficacy</p>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div class="card-content text-center">
+                        <div style="width: 4rem; height: 4rem; background: var(--gradient-rose); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1.5rem;">
+                            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+                                <path d="M7 13c3 0 5.5-2.5 5.5-6S10 1 7 1 1.5 3.5 1.5 7 4 13 7 13zM22 20.6L13.4 12c-.3-.3-.7-.3-1 0L8 16.6"/>
+                            </svg>
+                        </div>
+                        <h3 style="font-weight: 600; font-size: 1.25rem; margin-bottom: 1rem;">Eco-Friendly</h3>
+                        <p class="text-muted">Sustainably sourced ingredients with biodegradable packaging</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <div th:insert="footer.html"></div>
+
+    <script th:src="@{/js/script.js}"></script>
+
+    <script>
+        function toggleWishlist(productId) {
+            // Toggle wishlist functionality
+            showToast('Added to wishlist!');
+        }
+
+        // Product filtering and search functionality
+        let currentFilters = {
+            category: 'all',
+            concerns: [],
+            ingredients: [],
+            price: []
+        };
+
+        function searchProducts() {
+            const searchTerm = document.getElementById('search-input').value.toLowerCase();
+            applyFilters(searchTerm);
+        }
+
+        function handleSearch(searchTerm) {
+            document.getElementById('search-input').value = searchTerm;
+            searchProducts();
+        }
+
+        function updateResultsCount(count) {
+            const resultsCount = document.getElementById('results-count');
+            resultsCount.textContent = `Showing ${count} of ${document.querySelectorAll('.product-card').length} products`;
+        }
+
+        function applyFilters(searchTerm = '') {
+            const products = document.querySelectorAll('.product-card');
+            let visibleCount = 0;
+
+            products.forEach(product => {
+                const productName = product.dataset.name.toLowerCase();
+                const productCategory = product.dataset.category;
+                const productPrice = parseInt(product.dataset.price);
+                
+                // Check if product matches search term
+                const matchesSearch = !searchTerm || productName.includes(searchTerm.toLowerCase());
+                
+                // Check if product matches category filter
+                const matchesCategory = currentFilters.category === 'all' || productCategory === currentFilters.category;
+                
+                // Check if product matches price filter
+                let matchesPrice = true;
+                if (currentFilters.price.length > 0) {
+                    matchesPrice = currentFilters.price.some(priceRange => {
+                        switch(priceRange) {
+                            case 'under-1000': return productPrice < 1000;
+                            case '1000-2500': return productPrice >= 1000 && productPrice <= 2500;
+                            case '2500-3200': return productPrice >= 2500 && productPrice <= 3200;
+                            case 'over-3200': return productPrice > 3200;
+                            default: return true;
+                        }
+                    });
+                }
+
+                // Show/hide product based on all filters
+                if (matchesSearch && matchesCategory && matchesPrice) {
+                    product.style.display = 'block';
+                    visibleCount++;
+                } else {
+                    product.style.display = 'none';
+                }
+            });
+
+            updateResultsCount(visibleCount);
+        }
+
+        function sortProducts(sortBy) {
+            const productsContainer = document.getElementById('products-container');
+            const products = Array.from(productsContainer.children);
+
+            products.sort((a, b) => {
+                const nameA = a.dataset.name.toLowerCase();
+                const nameB = b.dataset.name.toLowerCase();
+                const priceA = parseInt(a.dataset.price);
+                const priceB = parseInt(b.dataset.price);
+                const ratingA = parseFloat(a.dataset.rating);
+                const ratingB = parseFloat(b.dataset.rating);
+
+                switch(sortBy) {
+                    case 'price-low':
+                        return priceA - priceB;
+                    case 'price-high':
+                        return priceB - priceA;
+                    case 'name':
+                        return nameA.localeCompare(nameB);
+                    case 'rating':
+                        return ratingB - ratingA;
+                    default:
+                        return 0;
+                }
+            });
+
+            // Re-append sorted products
+            products.forEach(product => productsContainer.appendChild(product));
+        }
+
+        function clearAllFilters() {
+            // Reset all form inputs
+            document.getElementById('category-filter').reset();
+            document.getElementById('price-filter').reset();
+            
+            // Reset search input
+            document.getElementById('search-input').value = '';
+            
+            // Reset current filters
+            currentFilters = {
+                category: 'all',
+                concerns: [],
+                ingredients: [],
+                price: []
+            };
+            
+            // Show all products
+            applyFilters();
+        }
+
+        //add to cart function
+        async function addToCartProduct(productId){
+            console.log("from product page id: " + productId);
+            try{
+                const cartData = {
+                    productId: productId,
+                    quantity: 1
+                };
+
+                const response = await fetch ('/add-to-cart',{
+                    method : 'POST',
+                    headers : { 'Content-Type': 'application/json'},
+                    body: JSON.stringify(cartData)
+                });
+
+                const result = await response.json();
+
+                if (response.ok){
+                    showToast('Product added to cart!');
+                }
+
+            }catch (error){
+                console.error('Add to cart error:', error);
+            }
+        }
+
+
+        // Event listeners for filter forms
+        document.addEventListener('DOMContentLoaded', function() {
+            // Category filter
+            document.getElementById('category-filter').addEventListener('change', function(e) {
+                if (e.target.name === 'category') {
+                    currentFilters.category = e.target.value;
+                    applyFilters();
+                }
+            });
+
+            // Price filter
+            document.getElementById('price-filter').addEventListener('change', function(e) {
+                if (e.target.name === 'price') {
+                    const checkedPrices = Array.from(document.querySelectorAll('input[name="price"]:checked'))
+                        .map(input => input.value);
+                    currentFilters.price = checkedPrices;
+                    applyFilters();
+                }
+            });
+
+            // Clear filters button
+            document.getElementById('clear-filters').addEventListener('click', clearAllFilters);
+
+            // Initialize page
+            const totalProducts = document.querySelectorAll('.product-card').length;
+            updateResultsCount(totalProducts);
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,726 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>User Management - Kaylia Admin</title>
+  <meta name="description" content="Manage users and create new accounts for Kaylia platform">
+  <link rel="stylesheet" th:href="@{/css/styles.css}">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <style>
+    .page-container {
+      min-height: 100vh;
+      background: var(--gradient-cream);
+    }
+
+    .page-header {
+      background: hsl(var(--card));
+      border-bottom: 1px solid hsl(var(--border));
+      padding: 1rem 0;
+      position: sticky;
+      top: 0;
+      z-index: 50;
+    }
+
+    .page-nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 1rem;
+    }
+
+    .page-logo {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      text-decoration: none;
+      color: hsl(var(--foreground));
+      font-family: 'Playfair Display', serif;
+      font-size: 1.5rem;
+      font-weight: 700;
+    }
+
+    .page-logo .logo-icon {
+      width: 2rem;
+      height: 2rem;
+      background: var(--gradient-rose);
+      border-radius: 50%;
+    }
+
+    .page-actions {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .admin-badge {
+      background: var(--gradient-rose);
+      color: white;
+      padding: 0.25rem 0.75rem;
+      border-radius: 1rem;
+      font-size: 0.875rem;
+      font-weight: 500;
+    }
+
+    .back-btn {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.5rem 1rem;
+      background: hsl(var(--muted) / 0.3);
+      border: 1px solid hsl(var(--border));
+      border-radius: 0.375rem;
+      text-decoration: none;
+      color: hsl(var(--foreground));
+      transition: var(--transition-smooth);
+      font-size: 0.875rem;
+    }
+
+    .back-btn:hover {
+      background: hsl(var(--muted) / 0.5);
+      border-color: hsl(var(--primary));
+    }
+
+    .page-main {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 2rem 1rem;
+    }
+
+    .page-title {
+      margin-bottom: 2rem;
+    }
+
+    .page-title h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.5rem;
+      font-weight: 700;
+      color: hsl(var(--foreground));
+      margin-bottom: 0.5rem;
+    }
+
+    .page-title p {
+      color: hsl(var(--muted-foreground));
+      font-size: 1.125rem;
+    }
+
+    .content-card {
+      background: hsl(var(--card));
+      border-radius: 0.5rem;
+      box-shadow: var(--shadow-soft);
+      border: 1px solid hsl(var(--border));
+      padding: 2rem;
+      margin-bottom: 2rem;
+    }
+
+    .user-management-tabs {
+      display: flex;
+      gap: 0.5rem;
+      margin-bottom: 2rem;
+      border-bottom: 1px solid hsl(var(--border));
+    }
+
+    .tab-btn {
+      padding: 0.75rem 1.5rem;
+      background: transparent;
+      border: none;
+      border-bottom: 2px solid transparent;
+      color: hsl(var(--muted-foreground));
+      cursor: pointer;
+      transition: var(--transition-smooth);
+      font-weight: 500;
+    }
+
+    .tab-btn.active {
+      color: hsl(var(--primary));
+      border-bottom-color: hsl(var(--primary));
+    }
+
+    .tab-btn:hover {
+      color: hsl(var(--foreground));
+    }
+
+    .tab-content {
+      display: none;
+    }
+
+    .tab-content.active {
+      display: block;
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+      margin-bottom: 2rem;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .form-group.full-width {
+      grid-column: 1 / -1;
+    }
+
+    .form-group label {
+      font-weight: 500;
+      color: hsl(var(--foreground));
+      font-size: 0.875rem;
+    }
+
+    .form-group input,
+    .form-group select {
+      padding: 0.75rem;
+      border: 1px solid hsl(var(--border));
+      border-radius: 0.375rem;
+      background: hsl(var(--background));
+      color: hsl(var(--foreground));
+      font-size: 0.875rem;
+      transition: var(--transition-smooth);
+    }
+
+    .form-group input:focus,
+    .form-group select:focus {
+      outline: none;
+      border-color: hsl(var(--primary));
+      box-shadow: 0 0 0 3px hsl(var(--primary) / 0.1);
+    }
+
+    .form-group small {
+      color: hsl(var(--muted-foreground));
+      font-size: 0.75rem;
+    }
+
+    .role-selector {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1rem;
+      margin-top: 0.5rem;
+    }
+
+    .role-option {
+      position: relative;
+      cursor: pointer;
+    }
+
+    .role-option input[type="radio"] {
+      position: absolute;
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+
+    .role-card {
+      padding: 1.5rem;
+      border: 2px solid hsl(var(--border));
+      border-radius: 0.5rem;
+      background: hsl(var(--background));
+      transition: var(--transition-smooth);
+      text-align: center;
+    }
+
+    .role-option input[type="radio"]:checked + .role-card {
+      border-color: hsl(var(--primary));
+      background: hsl(var(--primary) / 0.1);
+    }
+
+    .role-card:hover {
+      border-color: hsl(var(--primary) / 0.5);
+    }
+
+    .role-icon {
+      width: 3rem;
+      height: 3rem;
+      margin: 0 auto 1rem;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+    }
+
+    .role-super-admin .role-icon {
+      background: linear-gradient(135deg, #dc2626, #991b1b);
+    }
+
+    .role-admin .role-icon {
+      background: var(--gradient-rose);
+    }
+
+    .role-vendor .role-icon {
+      background: linear-gradient(135deg, #10b981, #059669);
+    }
+
+    .role-title {
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+      color: hsl(var(--foreground));
+    }
+
+    .role-description {
+      font-size: 0.875rem;
+      color: hsl(var(--muted-foreground));
+    }
+
+    .form-actions {
+      display: flex;
+      gap: 1rem;
+      justify-content: flex-end;
+      padding-top: 1.5rem;
+      border-top: 1px solid hsl(var(--border));
+    }
+
+    .btn-primary,
+    .btn-secondary {
+      padding: 0.75rem 1.5rem;
+      border-radius: 0.375rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: var(--transition-smooth);
+      border: none;
+      font-size: 0.875rem;
+    }
+
+    .btn-primary {
+      background: var(--gradient-rose);
+      color: white;
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-1px);
+      box-shadow: var(--shadow-elegant);
+    }
+
+    .btn-secondary {
+      background: hsl(var(--muted));
+      color: hsl(var(--foreground));
+      border: 1px solid hsl(var(--border));
+    }
+
+    .btn-secondary:hover {
+      background: hsl(var(--muted) / 0.8);
+    }
+
+    .message {
+      padding: 1rem;
+      border-radius: 0.375rem;
+      margin-bottom: 1rem;
+      display: none;
+    }
+
+    .message.success {
+      background: #dcfce7;
+      color: #166534;
+      border: 1px solid #bbf7d0;
+    }
+
+    .message.error {
+      background: #fef2f2;
+      color: #dc2626;
+      border: 1px solid #fecaca;
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 2rem;
+    }
+
+    .stat-card {
+      background: hsl(var(--background));
+      border: 1px solid hsl(var(--border));
+      border-radius: 0.5rem;
+      padding: 1.5rem;
+      text-align: center;
+    }
+
+    .stat-number {
+      font-size: 2rem;
+      font-weight: 700;
+      color: hsl(var(--primary));
+      margin-bottom: 0.5rem;
+    }
+
+    .stat-label {
+      color: hsl(var(--muted-foreground));
+      font-size: 0.875rem;
+    }
+
+    @media (max-width: 768px) {
+      .form-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .role-selector {
+        grid-template-columns: 1fr;
+      }
+
+      .page-title h1 {
+        font-size: 2rem;
+      }
+
+      .form-actions {
+        flex-direction: column;
+      }
+    }
+  </style>
+</head>
+<body>
+<div class="page-container">
+  <!-- Page Header -->
+  <header class="page-header">
+    <div class="page-nav">
+      <a href="/" class="page-logo">
+        <div class="logo-icon"></div>
+        <span>Kaylia Admin</span>
+      </a>
+
+      <div class="page-actions">
+        <span class="admin-badge">Administrator</span>
+        <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle dark mode">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path class="sun" d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/>
+            <circle class="sun" cx="12" cy="12" r="5"/>
+          </svg>
+        </button>
+        <a href="/admin/dashboard" class="back-btn">
+          <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+          </svg>
+          Back to Dashboard
+        </a>
+        <a href="/auth/logout"  class="btn btn-primary"  style="margin-left: 0.5rem;">
+          <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="margin-right: 0.5rem;">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/>
+          </svg>
+          Logout
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Page Main Content -->
+  <main class="page-main">
+    <div class="page-title">
+      <h1>User Management</h1>
+      <p>Create and manage user accounts for the Kaylia platform</p>
+    </div>
+
+    <div id="message" class="message"></div>
+
+    <!-- User Statistics -->
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-number" th:text="${totalUsers}">0</div>
+        <div class="stat-label">Users</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number" th:text="${superAdmins}">0</div>
+        <div class="stat-label" >Super Admins</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number" th:text="${admins}">0</div>
+        <div class="stat-label" >Admins</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number" th:text="${vendors}">0</div>
+        <div class="stat-label" >Vendors</div>
+      </div>
+    </div>
+
+    <div class="content-card">
+      <div class="user-management-tabs">
+        <a href="/admin/create-user" class="tab-btn active">Create User</a>
+        <a href="/admin/manage-user" class="tab-btn" >Manage Users</a>
+      </div>
+
+      <!-- Create User Form -->
+      <div id="create-user" class="tab-content active">
+        <form id="user-form" class="user-form" onsubmit="handleRegisterUser(event)">
+          <div class="form-grid">
+            <div class="form-group">
+              <label for="user-first-name">First Name *</label>
+              <input type="text" id="user-first-name" name="fName" required placeholder="Enter first name">
+            </div>
+
+            <div class="form-group">
+              <label for="user-last-name">Last Name *</label>
+              <input type="text" id="user-last-name" name="lName" required placeholder="Enter last name">
+            </div>
+
+            <div class="form-group">
+              <label for="user-email">Email Address *</label>
+              <input type="email" id="user-email" name="email" required placeholder="user@example.com">
+            </div>
+
+
+            <div class="form-group">
+              <label for="user-password">Password *</label>
+              <input type="password" id="user-password" name="password" required placeholder="Enter secure password">
+              <small>Password must be at least 8 characters long</small>
+            </div>
+
+
+            <div class="form-group full-width">
+              <label>User Role *</label>
+              <div class="role-selector">
+
+
+                <label class="role-option">
+                  <input type="radio" name="role" value="admin" required>
+                  <div class="role-card role-admin">
+                    <div class="role-icon">
+                      <svg width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+                      </svg>
+                    </div>
+                    <div class="role-title">Admin</div>
+                    <div class="role-description">Platform management and oversight</div>
+                  </div>
+                </label>
+
+                <label class="role-option">
+                  <input type="radio" name="role" value="vendor" required>
+                  <div class="role-card role-vendor">
+                    <div class="role-icon">
+                      <svg width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M7 18c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12L8.1 13h7.45c.75 0 1.41-.41 1.75-1.03L21.7 4H5.21l-.94-2H1zm16 16c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/>
+                      </svg>
+                    </div>
+                    <div class="role-title">Vendor</div>
+                    <div class="role-description">Product sales and management</div>
+                  </div>
+                </label>
+
+                <label class="role-option">
+                  <input type="radio" name="role" value="super-admin" required>
+                  <div id="super-admin-role" class="role-card role-super-admin">
+                    <div class="role-icon">
+                      <svg width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                      </svg>
+                    </div>
+                    <div class="role-title">Super Admin</div>
+                    <div class="role-description">Full system access and control</div>
+                  </div>
+                </label>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-actions">
+            <button type="button" class="btn-secondary" onclick="resetForm()">Reset Form</button>
+            <button type="submit" class="btn-primary">Create User</button>
+          </div>
+        </form>
+      </div>
+
+      <!---- Manage Users Tab ----->
+      <div id="manage-users" class="tab-content">
+        <div class="users-list">
+          <div class="users-header">
+            <h3>All Users</h3>
+            <div class="search-bar">
+              <input type="text" id="search-users" class="search-input" placeholder="Search users by name or email...">
+              <button class="btn-secondary" onclick="refreshUsersList()">Refresh</button>
+            </div>
+          </div>
+          <div id="users-list-container">
+            <!-- Users will be loaded here -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<script th:src="@{/js/script.js}"></script>
+<script>
+  //to check if role is admin or super_admin for super admin creation
+  async function roleCheck(){
+    try{
+      const response = await fetch('/admin/role-check', {
+        method: 'GET',
+        headers: {
+          'Accept': 'application/json'
+        }
+      });
+
+      const result = await response.json();
+      const supAdminRadio = document.getElementById('super-admin-role');
+
+      if(result.role === "ROLE_ADMIN"){
+        supAdminRadio.classList.add('hidden');
+      }else{
+        supAdminRadio.classList.remove('hidden');
+      }
+
+    }catch(error){
+      console.error('Error fetching role:', error);
+    }
+  }
+
+  document.addEventListener('DOMContentLoaded', roleCheck);
+
+  function toggleTheme() {
+    const html = document.documentElement;
+    const currentTheme = html.getAttribute('data-theme');
+    const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+    html.setAttribute('data-theme', newTheme);
+    localStorage.setItem('theme', newTheme);
+  }
+
+  // Show success message
+  function showSuccess(message) {
+    const existingError = document.querySelector('.error-message');
+    if (existingError) {
+      existingError.remove();
+    }
+    const successDiv = document.createElement('div');
+    successDiv.className = 'success-message';
+    successDiv.style.cssText = `
+                background: #f0fdf4;
+                border: 1px solid #bbf7d0;
+                color: #16a34a;
+                padding: 0.75rem;
+                border-radius: 0.5rem;
+                margin-bottom: 1rem;
+                font-size: 0.875rem;
+                text-align: center;
+            `;
+    successDiv.textContent = message;
+
+    const form = document.getElementById('user-form');
+    form.parentNode.insertBefore(successDiv, form);
+
+    resetForm();
+
+    setTimeout(() => {
+      if (successDiv.parentNode) {
+        successDiv.remove();
+      }
+    }, 5000);
+
+  }
+
+  // Show error message
+  function showError(message) {
+    // Remove any existing error messages
+    const existingError = document.querySelector('.error-message');
+    if (existingError) {
+      existingError.remove();
+    }
+
+    // Create error message element
+    const errorDiv = document.createElement('div');
+    errorDiv.className = 'error-message';
+    errorDiv.style.cssText = `
+                    background: #fef2f2;
+                    border: 1px solid #fecaca;
+                    color: #dc2626;
+                    padding: 0.75rem;
+                    border-radius: 0.5rem;
+                    margin-bottom: 1rem;
+                    font-size: 0.875rem;
+                    text-align: center;
+                `;
+    errorDiv.textContent = message;
+
+    // Insert before the form
+    const form = document.getElementById('user-form');
+    form.parentNode.insertBefore(errorDiv, form);
+
+    // Auto-remove after 10 seconds
+    setTimeout(() => {
+      if (errorDiv.parentNode) {
+        errorDiv.remove();
+      }
+    }, 10000);
+  }
+
+  //for tab switch from create user to manage user
+  function switchTab(tabName) {
+    const tabContents = document.querySelectorAll('.tab-content');
+    tabContents.forEach(content => content.classList.remove('active'));
+
+    const tabBtns = document.querySelectorAll('.tab-btn');
+    tabBtns.forEach(btn => btn.classList.remove('active'));
+
+    document.getElementById(tabName).classList.add('active');
+    event.target.classList.add('active');
+  }
+
+  function resetForm() {
+    document.getElementById('user-form').reset();
+  }
+
+  function refreshUsersList() {
+    // Placeholder - will implement full functionality next
+    console.log('Refreshing users list...');
+  }
+
+  // Initialize theme
+  document.addEventListener('DOMContentLoaded', function() {
+    const savedTheme = localStorage.getItem('theme') || 'light';
+    document.documentElement.setAttribute('data-theme', savedTheme);
+  });
+
+  //for create-user
+  async function handleRegisterUser(event){
+    event.preventDefault();
+
+    const formData = new FormData(event.target);
+    const data = Object.fromEntries(formData);
+
+    try{
+      //data for api
+      const createUserData = {
+        fName: data.fName.trim(),
+        lName: data.lName.trim(),
+        email: data.email.trim(),
+        password: data.password.trim(),
+        role: data.role.trim()
+      };
+
+      console.log(createUserData);
+
+      const response = await fetch('/admin/create-user', {
+        method : 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+        },
+        body: JSON.stringify(createUserData)
+      });
+
+      const result = await response.json();
+
+      if(response.ok){
+        showSuccess(result.message);
+
+
+      }else{
+        const errorMessage = result.message || result.error || 'Registration failed. Please try again.';
+        showError(errorMessage);
+      }
+    }catch (error){
+      console.error('Signup error:', error);
+
+      // Network or other errors
+      if (error.name === 'TypeError' && error.message.includes('fetch')) {
+        showError('Network error. Please check your connection and try again.');
+      } else {
+        showError('An unexpected error occurred. Please try again.');
+      }
+    }
+  }
+</script>
+</body>
+</html>

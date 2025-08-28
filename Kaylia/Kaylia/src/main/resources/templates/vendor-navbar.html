@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Vendor Navbar</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+</head>
+<body>
+<!-- Dashboard Header -->
+<header class="dashboard-header">
+  <div class="dashboard-nav">
+    <a href="/" class="dashboard-logo">
+      <div class="logo-icon"></div>
+      <span>Kaylia Vendor</span>
+    </a>
+
+    <div class="dashboard-actions">
+      <span class="vendor-badge">Verified Vendor</span>
+      <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle dark mode">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path class="sun" d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/>
+          <circle class="sun" cx="12" cy="12" r="5"/>
+        </svg>
+      </button>
+      <a href="/" class="btn btn-outline">View Storefront</a>
+      <a class="btn btn-primary" href="/auth/logout" style="margin-left: 0.5rem;">
+        <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="margin-right: 0.5rem;">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/>
+        </svg>
+        Logout
+      </a>
+    </div>
+  </div>
+</header>
+
+<script th:src="@{/js/script.js}"></script>
+</body>
+</html>

@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Dashboard Navbar</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <style>
+      .dashboard-container {
+        min-height: 100vh;
+        background: var(--gradient-cream);
+      }
+
+      .dashboard-header {
+        background: hsl(var(--card));
+        border-bottom: 1px solid hsl(var(--border));
+        padding: 1rem 0;
+        position: sticky;
+        top: 0;
+        z-index: 50;
+      }
+
+      .dashboard-nav {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 1rem;
+      }
+
+      .dashboard-logo {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        text-decoration: none;
+        color: hsl(var(--foreground));
+        font-family: 'Playfair Display', serif;
+        font-size: 1.5rem;
+        font-weight: 700;
+      }
+
+      .dashboard-logo .logo-icon {
+        width: 2rem;
+        height: 2rem;
+        background: var(--gradient-rose);
+        border-radius: 50%;
+      }
+
+      .dashboard-actions {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+      }
+
+      .user-welcome {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        color: hsl(var(--foreground));
+      }
+
+      .user-avatar {
+        width: 2.5rem;
+        height: 2.5rem;
+        background: var(--gradient-rose);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-weight: 600;
+      }
+
+      .dashboard-main {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 2rem 1rem;
+      }
+
+      .dashboard-title {
+        margin-bottom: 2rem;
+      }
+
+      .dashboard-title h1 {
+        font-family: 'Playfair Display', serif;
+        font-size: 2.5rem;
+        font-weight: 700;
+        color: hsl(var(--foreground));
+        margin-bottom: 0.5rem;
+      }
+
+      .dashboard-title p {
+        color: hsl(var(--muted-foreground));
+        font-size: 1.125rem;
+      }
+
+      .dashboard-grid {
+        display: grid;
+        grid-template-columns: 1fr 2fr;
+        gap: 2rem;
+      }
+
+      .sidebar {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+      }
+
+      .nav-card {
+        background: hsl(var(--card));
+        border-radius: 0.5rem;
+        box-shadow: var(--shadow-soft);
+        border: 1px solid hsl(var(--border));
+        overflow: hidden;
+      }
+
+      .nav-item {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        padding: 1rem 1.5rem;
+        text-decoration: none;
+        color: hsl(var(--foreground));
+        border-bottom: 1px solid hsl(var(--border));
+        transition: var(--transition-smooth);
+      }
+
+      .nav-item:last-child {
+        border-bottom: none;
+      }
+
+      .nav-item:hover {
+        background: hsl(var(--accent));
+      }
+
+      .nav-item.active {
+        background: var(--gradient-rose);
+        color: white;
+      }
+
+      .nav-icon {
+        width: 1.25rem;
+        height: 1.25rem;
+      }
+
+      .main-content {
+        display: flex;
+        flex-direction: column;
+        gap: 2rem;
+      }
+
+      .content-card {
+        background: hsl(var(--card));
+        border-radius: 0.5rem;
+        box-shadow: var(--shadow-soft);
+        border: 1px solid hsl(var(--border));
+      }
+
+      .card-header {
+        padding: 1.5rem 1.5rem 0;
+        border-bottom: 1px solid hsl(var(--border));
+        margin-bottom: 1.5rem;
+      }
+
+      .card-title {
+        font-family: 'Playfair Display', serif;
+        font-size: 1.25rem;
+        font-weight: 600;
+        color: hsl(var(--foreground));
+        margin-bottom: 0.5rem;
+      }
+
+      .card-description {
+        color: hsl(var(--muted-foreground));
+        font-size: 0.875rem;
+      }
+
+      .card-content {
+        padding: 0 1.5rem 1.5rem;
+      }
+
+      .profile-section {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1.5rem;
+      }
+
+      .form-group {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+      }
+
+      .form-group label {
+        font-weight: 500;
+        color: hsl(var(--foreground));
+      }
+
+      .form-group input {
+        padding: 0.75rem;
+        border: 1px solid hsl(var(--border));
+        border-radius: 0.375rem;
+        background: hsl(var(--background));
+        color: hsl(var(--foreground));
+      }
+
+      .order-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 1.5rem 0;
+        border-bottom: 1px solid hsl(var(--border));
+      }
+
+      .order-item:last-child {
+        border-bottom: none;
+      }
+
+      .order-details {
+        display: flex;
+        gap: 1rem;
+      }
+
+      .order-image {
+        width: 4rem;
+        height: 4rem;
+        border-radius: 0.375rem;
+        object-fit: cover;
+      }
+
+      .order-info h4 {
+        font-weight: 600;
+        margin-bottom: 0.25rem;
+      }
+
+      .order-info p {
+        color: hsl(var(--muted-foreground));
+        font-size: 0.875rem;
+        margin-bottom: 0.25rem;
+      }
+
+      .order-status {
+        padding: 0.25rem 0.75rem;
+        border-radius: 1rem;
+        font-size: 0.75rem;
+        font-weight: 500;
+      }
+
+      .status-delivered {
+        background: #dcfce7;
+        color: #166534;
+      }
+
+      .status-shipped {
+        background: #dbeafe;
+        color: #1e40af;
+      }
+
+      .status-processing {
+        background: #fef3c7;
+        color: #92400e;
+      }
+
+      .wishlist-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+        gap: 1.5rem;
+      }
+
+      .wishlist-item {
+        border: 1px solid hsl(var(--border));
+        border-radius: 0.5rem;
+        overflow: hidden;
+        transition: var(--transition-smooth);
+      }
+
+      .wishlist-item:hover {
+        transform: translateY(-2px);
+        box-shadow: var(--shadow-elegant);
+      }
+
+      .wishlist-image {
+        width: 100%;
+        height: 150px;
+        object-fit: cover;
+      }
+
+      .wishlist-content {
+        padding: 1rem;
+      }
+
+      .wishlist-title {
+        font-weight: 600;
+        margin-bottom: 0.5rem;
+      }
+
+      .wishlist-price {
+        color: hsl(var(--primary));
+        font-weight: 600;
+      }
+
+      .skin-analysis-card {
+        background: var(--gradient-cream);
+        border: 2px solid hsl(var(--primary));
+        border-radius: 0.75rem;
+        padding: 2rem;
+        text-align: center;
+      }
+
+      .analysis-icon {
+        width: 4rem;
+        height: 4rem;
+        background: var(--gradient-rose);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 1rem;
+      }
+
+      @media (max-width: 768px) {
+        .dashboard-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .profile-section {
+          grid-template-columns: 1fr;
+        }
+
+        .dashboard-title h1 {
+          font-size: 2rem;
+        }
+
+        .wishlist-grid {
+          grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+        }
+      }
+    </style>
+</head>
+<body>
+<!-- Dashboard Header -->
+<header class="dashboard-header">
+  <div class="dashboard-nav">
+    <a href="/" class="dashboard-logo">
+      <div class="logo-icon"></div>
+      <span>Kaylia</span>
+    </a>
+
+    <div class="dashboard-actions">
+      <div class="user-welcome">
+        <div class="user-avatar">U</div>
+        <span>Welcome, <span th:text="${fName}"></span></span>
+      </div>
+      <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle dark mode">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path class="sun" d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/>
+          <circle class="sun" cx="12" cy="12" r="5"/>
+        </svg>
+      </button>
+      <a href="/" class="btn btn-outline">Continue Shopping</a>
+    </div>
+  </div>
+</header>
+
+<script th:src="@{/js/script.js}"></script>
+<script>
+  function toggleTheme() {
+    const html = document.documentElement;
+    const currentTheme = html.getAttribute('data-theme');
+    const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+
+    html.setAttribute('data-theme', newTheme);
+    localStorage.setItem('theme', newTheme);
+  }
+
+  // Initialize theme
+  document.addEventListener('DOMContentLoaded', function() {
+    const savedTheme = localStorage.getItem('theme') || 'light';
+    document.documentElement.setAttribute('data-theme', savedTheme);
+  });
+</script>
+</body>
+</html>

@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us - Kaylia Skincare</title>
+    <meta name="description" content="Learn about Kaylia's mission to provide premium, natural skincare solutions. Discover our story, values, and commitment to clean beauty.">
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+    <style>
+        .hero-about {
+            padding: 6rem 0;
+            background: var(--gradient-cream);
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+        
+        .stat-item {
+            text-align: center;
+            padding: 2rem;
+        }
+        
+        .stat-number {
+            font-size: 3rem;
+            font-weight: 700;
+            color: hsl(var(--primary));
+            margin-bottom: 0.5rem;
+        }
+        
+        .values-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+        
+        .value-item {
+            padding: 2rem;
+            background: hsl(var(--card));
+            border-radius: 0.5rem;
+            box-shadow: var(--shadow-soft);
+        }
+        
+        .value-icon {
+            width: 3rem;
+            height: 3rem;
+            background: var(--gradient-rose);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1rem;
+        }
+        
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+        
+        .team-member {
+            text-align: center;
+            background: hsl(var(--card));
+            border-radius: 0.5rem;
+            padding: 2rem;
+            box-shadow: var(--shadow-soft);
+        }
+        
+        .team-photo {
+            width: 8rem;
+            height: 8rem;
+            border-radius: 50%;
+            object-fit: cover;
+            margin: 0 auto 1rem;
+            border: 4px solid hsl(var(--primary) / 0.1);
+        }
+        
+        .team-name {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+        
+        .team-role {
+            color: hsl(var(--primary));
+            font-weight: 500;
+            margin-bottom: 1rem;
+        }
+        
+        .timeline {
+            position: relative;
+            max-width: 800px;
+            margin: 3rem auto;
+        }
+        
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: hsl(var(--border));
+            transform: translateX(-50%);
+        }
+        
+        .timeline-item {
+            position: relative;
+            margin-bottom: 2rem;
+        }
+        
+        .timeline-content {
+            background: hsl(var(--card));
+            padding: 1.5rem;
+            border-radius: 0.5rem;
+            box-shadow: var(--shadow-soft);
+            width: calc(50% - 2rem);
+        }
+        
+        .timeline-item:nth-child(odd) .timeline-content {
+            margin-left: auto;
+        }
+        
+        .timeline-year {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: hsl(var(--primary));
+            margin-bottom: 0.5rem;
+        }
+        
+        .timeline-dot {
+            position: absolute;
+            left: 50%;
+            top: 1rem;
+            width: 1rem;
+            height: 1rem;
+            background: hsl(var(--primary));
+            border-radius: 50%;
+            transform: translateX(-50%);
+            border: 3px solid hsl(var(--background));
+        }
+        
+        @media (max-width: 768px) {
+            .timeline::before {
+                left: 2rem;
+            }
+            
+            .timeline-content {
+                width: calc(100% - 4rem);
+                margin-left: 4rem !important;
+            }
+            
+            .timeline-dot {
+                left: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header th:insert="navbar.html"></header>
+    <!-- End header -->
+
+    <!-- Hero Section -->
+    <section class="hero-about">
+        <div class="container">
+            <div class="text-center">
+                <h1 class="font-serif" style="font-size: 3.5rem; font-weight: 700; margin-bottom: 1.5rem;">
+                    Our Story
+                </h1>
+                <p style="font-size: 1.25rem; color: hsl(var(--muted-foreground)); max-width: 40rem; margin: 0 auto 2rem;">
+                    Founded on the belief that everyone deserves access to clean, effective skincare, 
+                    Kaylia combines nature's finest ingredients with cutting-edge science.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Mission Section -->
+    <section class="section">
+        <div class="container">
+            <div class="grid grid-md-2" style="align-items: center; gap: 4rem;">
+                <div>
+                    <h2 class="font-serif" style="font-size: 2.5rem; font-weight: 700; margin-bottom: 1.5rem;">
+                        Our Mission
+                    </h2>
+                    <p style="font-size: 1.125rem; color: hsl(var(--muted-foreground)); margin-bottom: 1.5rem; line-height: 1.7;">
+                        At Kaylia, we're committed to revolutionizing skincare by creating products that are both 
+                        luxurious and accessible. We believe that effective skincare shouldn't compromise your 
+                        health or the environment.
+                    </p>
+                    <p style="font-size: 1.125rem; color: hsl(var(--muted-foreground)); line-height: 1.7;">
+                        Every product is carefully formulated with clinically-proven ingredients, sourced 
+                        ethically, and tested for safety and efficacy. We're not just a skincare brand—we're 
+                        your partners in achieving healthy, radiant skin.
+                    </p>
+                </div>
+                <div>
+                    <img src="https://images.unsplash.com/photo-1556228720-195a672e8a03?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" 
+                         alt="Kaylia skincare products" 
+                         style="width: 100%; height: 400px; object-fit: cover; border-radius: 0.5rem;">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="section section-muted">
+        <div class="container">
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <div class="stat-number">50K+</div>
+                    <p style="color: hsl(var(--muted-foreground)); font-weight: 500;">Happy Customers</p>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">98%</div>
+                    <p style="color: hsl(var(--muted-foreground)); font-weight: 500;">Natural Ingredients</p>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">5</div>
+                    <p style="color: hsl(var(--muted-foreground)); font-weight: 500;">Years of Research</p>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">25+</div>
+                    <p style="color: hsl(var(--muted-foreground)); font-weight: 500;">Premium Products</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Values Section -->
+    <section class="section">
+        <div class="container">
+            <div class="text-center mb-8">
+                <h2 class="font-serif" style="font-size: 2.5rem; font-weight: 700; margin-bottom: 1rem;">
+                    Our Values
+                </h2>
+                <p style="font-size: 1.25rem; color: hsl(var(--muted-foreground)); max-width: 32rem; margin: 0 auto;">
+                    The principles that guide everything we do
+                </p>
+            </div>
+            
+            <div class="values-grid">
+                <div class="value-item">
+                    <div class="value-icon">
+                        <svg width="24" height="24" fill="none" stroke="white" stroke-width="2" viewBox="0 0 24 24">
+                            <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                        </svg>
+                    </div>
+                    <h3 style="font-size: 1.25rem; font-weight: 600; margin-bottom: 1rem;">Quality First</h3>
+                    <p class="text-muted">We never compromise on quality. Every ingredient is carefully selected and every product rigorously tested.</p>
+                </div>
+                
+                <div class="value-item">
+                    <div class="value-icon">
+                        <svg width="24" height="24" fill="none" stroke="white" stroke-width="2" viewBox="0 0 24 24">
+                            <path d="M7 13c3 0 5.5-2.5 5.5-6S10 1 7 1 1.5 3.5 1.5 7 4 13 7 13zM22 20.6L13.4 12c-.3-.3-.7-.3-1 0L8 16.6"/>
+                        </svg>
+                    </div>
+                    <h3 style="font-size: 1.25rem; font-weight: 600; margin-bottom: 1rem;">Natural Beauty</h3>
+                    <p class="text-muted">We harness the power of nature with botanical extracts and organic compounds for gentle yet effective results.</p>
+                </div>
+                
+                <div class="value-item">
+                    <div class="value-icon">
+                        <svg width="24" height="24" fill="none" stroke="white" stroke-width="2" viewBox="0 0 24 24">
+                            <path d="M9 12l2 2 4-4"/>
+                            <circle cx="12" cy="12" r="9"/>
+                        </svg>
+                    </div>
+                    <h3 style="font-size: 1.25rem; font-weight: 600; margin-bottom: 1rem;">Transparency</h3>
+                    <p class="text-muted">We believe in complete transparency about our ingredients, processes, and the science behind our formulations.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Timeline Section -->
+    <section class="section section-muted">
+        <div class="container">
+            <div class="text-center mb-8">
+                <h2 class="font-serif" style="font-size: 2.5rem; font-weight: 700; margin-bottom: 1rem;">
+                    Our Journey
+                </h2>
+                <p style="font-size: 1.25rem; color: hsl(var(--muted-foreground)); max-width: 32rem; margin: 0 auto;">
+                    From a small lab to a global brand
+                </p>
+            </div>
+            
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <div class="timeline-year">2019</div>
+                        <h3 style="font-weight: 600; margin-bottom: 0.5rem;">The Beginning</h3>
+                        <p class="text-muted">Founded by skincare enthusiasts with a vision to create clean, effective products for everyone.</p>
+                    </div>
+                </div>
+                
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <div class="timeline-year">2020</div>
+                        <h3 style="font-weight: 600; margin-bottom: 0.5rem;">First Products</h3>
+                        <p class="text-muted">Launched our signature Vitamin C serum and Hyaluronic Acid moisturizer to immediate acclaim.</p>
+                    </div>
+                </div>
+                
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <div class="timeline-year">2022</div>
+                        <h3 style="font-weight: 600; margin-bottom: 0.5rem;">Global Expansion</h3>
+                        <p class="text-muted">Expanded internationally and reached over 25,000 satisfied customers worldwide.</p>
+                    </div>
+                </div>
+                
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <div class="timeline-year">2024</div>
+                        <h3 style="font-weight: 600; margin-bottom: 0.5rem;">Innovation Continues</h3>
+                        <p class="text-muted">Introducing advanced formulations and sustainable packaging solutions for the future of skincare.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Team Section -->
+    <section class="section">
+        <div class="container">
+            <div class="text-center mb-8">
+                <h2 class="font-serif" style="font-size: 2.5rem; font-weight: 700; margin-bottom: 1rem;">
+                    Meet Our Team
+                </h2>
+                <p style="font-size: 1.25rem; color: hsl(var(--muted-foreground)); max-width: 32rem; margin: 0 auto;">
+                    The passionate individuals behind Kaylia
+                </p>
+            </div>
+            
+            <div class="team-grid">
+                <div class="team-member">
+                    <img src="https://images.unsplash.com/photo-1494790108755-2616b612b0e5?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" 
+                         alt="Sarah Johnson" class="team-photo">
+                    <div class="team-name">Sarah Johnson</div>
+                    <div class="team-role">Founder & CEO</div>
+                    <p class="text-muted">Dermatologist with 15+ years of experience in skincare formulation and clean beauty advocacy.</p>
+                </div>
+                
+                <div class="team-member">
+                    <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" 
+                         alt="Michael Chen" class="team-photo">
+                    <div class="team-name">Michael Chen</div>
+                    <div class="team-role">Chief Science Officer</div>
+                    <p class="text-muted">Biochemist specializing in natural ingredient research and product efficacy testing.</p>
+                </div>
+                
+                <div class="team-member">
+                    <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" 
+                         alt="Emma Rodriguez" class="team-photo">
+                    <div class="team-name">Emma Rodriguez</div>
+                    <div class="team-role">Head of Sustainability</div>
+                    <p class="text-muted">Environmental scientist dedicated to sustainable practices and eco-friendly packaging solutions.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section section" style="background-image: url('https://images.unsplash.com/photo-1556228453-efd6c1ff04f6?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80')">
+        <div class="container">
+            <div class="cta-content">
+                <h2 class="font-serif" style="font-size: 2.5rem; font-weight: 700; margin-bottom: 1.5rem;">
+                    Join the Kaylia Community
+                </h2>
+                <p style="font-size: 1.25rem; margin-bottom: 2rem; max-width: 32rem; margin-left: auto; margin-right: auto; opacity: 0.9;">
+                    Experience the difference that clean, effective skincare can make for your skin.
+                </p>
+                <a href="products.html" class="btn btn-lg" style="background: white; color: hsl(var(--primary)); padding: 0.75rem 2rem;">
+                    Shop Our Products
+                    <svg style="margin-left: 0.5rem;" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M5 12h14M12 5l7 7-7 7"/>
+                    </svg>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <div th:insert="footer.html"></div>
+
+    <script th:src="@{/js/script.js}"></script>
+
+</body>
+</html>

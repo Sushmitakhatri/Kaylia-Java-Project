@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Manage Product - Kaylia Vendor Portal</title>
+  <meta name="description" content="Add and manage products for your Kaylia vendor store">
+  <link rel="stylesheet" th:href="@{/css/styles.css}">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <style>
+    .page-container {
+      min-height: 100vh;
+      background: var(--gradient-cream);
+    }
+
+    .page-actions {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .vendor-badge {
+      background: linear-gradient(135deg, #10b981, #059669);
+      color: white;
+      padding: 0.25rem 0.75rem;
+      border-radius: 1rem;
+      font-size: 0.875rem;
+      font-weight: 500;
+    }
+
+    .back-btn {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.5rem 1rem;
+      background: hsl(var(--muted) / 0.3);
+      border: 1px solid hsl(var(--border));
+      border-radius: 0.375rem;
+      text-decoration: none;
+      color: hsl(var(--foreground));
+      transition: var(--transition-smooth);
+      font-size: 0.875rem;
+    }
+
+    .back-btn:hover {
+      background: hsl(var(--muted) / 0.5);
+      border-color: hsl(var(--primary));
+    }
+
+    .page-main {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 2rem 1rem;
+    }
+
+    .page-title {
+      margin-bottom: 2rem;
+    }
+
+    .page-title h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.5rem;
+      font-weight: 700;
+      color: hsl(var(--foreground));
+      margin-bottom: 0.5rem;
+    }
+
+    .page-title p {
+      color: hsl(var(--muted-foreground));
+      font-size: 1.125rem;
+    }
+
+    .content-card {
+      background: hsl(var(--card));
+      border-radius: 0.5rem;
+      box-shadow: var(--shadow-soft);
+      border: 1px solid hsl(var(--border));
+      padding: 2rem;
+    }
+
+    .product-management-tabs {
+      display: flex;
+      gap: 0.5rem;
+      margin-bottom: 2rem;
+      border-bottom: 1px solid hsl(var(--border));
+    }
+
+    .tab-btn {
+      padding: 0.75rem 1.5rem;
+      background: transparent;
+      border: none;
+      border-bottom: 2px solid transparent;
+      color: hsl(var(--muted-foreground));
+      cursor: pointer;
+      transition: var(--transition-smooth);
+      font-weight: 500;
+    }
+
+    .tab-btn.active {
+      color: hsl(var(--primary));
+      border-bottom-color: hsl(var(--primary));
+    }
+
+    .tab-btn:hover {
+      color: hsl(var(--foreground));
+    }
+
+    .tab-content {
+      display: none;
+    }
+
+    .tab-content.active {
+      display: block;
+    }
+
+    .product-form {
+      width: 100%;
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+      margin-bottom: 2rem;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .form-group.full-width {
+      grid-column: 1 / -1;
+    }
+
+    .form-group label {
+      font-weight: 500;
+      color: hsl(var(--foreground));
+      font-size: 0.875rem;
+    }
+
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      padding: 0.75rem;
+      border: 1px solid hsl(var(--border));
+      border-radius: 0.375rem;
+      background: hsl(var(--background));
+      color: hsl(var(--foreground));
+      font-size: 0.875rem;
+      transition: var(--transition-smooth);
+    }
+
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus {
+      outline: none;
+      border-color: hsl(var(--primary));
+      box-shadow: 0 0 0 3px hsl(var(--primary) / 0.1);
+    }
+
+    .form-group small {
+      color: hsl(var(--muted-foreground));
+      font-size: 0.75rem;
+    }
+
+    .file-input {
+      cursor: pointer;
+    }
+
+    .image-preview {
+      margin-top: 0.5rem;
+    }
+
+    .form-actions {
+      display: flex;
+      gap: 1rem;
+      justify-content: flex-end;
+      padding-top: 1.5rem;
+      border-top: 1px solid hsl(var(--border));
+    }
+
+    .btn-primary,
+    .btn-secondary {
+      padding: 0.75rem 1.5rem;
+      border-radius: 0.375rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: var(--transition-smooth);
+      border: none;
+      font-size: 0.875rem;
+    }
+
+    .btn-primary {
+      background: var(--gradient-rose);
+      color: white;
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-1px);
+      box-shadow: var(--shadow-elegant);
+    }
+
+    .btn-secondary {
+      background: hsl(var(--muted));
+      color: hsl(var(--foreground));
+      border: 1px solid hsl(var(--border));
+    }
+
+    .btn-secondary:hover {
+      background: hsl(var(--muted) / 0.8);
+    }
+
+    .message {
+      padding: 1rem;
+      border-radius: 0.375rem;
+      margin-bottom: 1rem;
+      display: none;
+    }
+
+    .message.success {
+      background: #dcfce7;
+      color: #166534;
+      border: 1px solid #bbf7d0;
+    }
+
+    .message.error {
+      background: #fef2f2;
+      color: #dc2626;
+      border: 1px solid #fecaca;
+    }
+
+    .products-list {
+      margin-top: 2rem;
+    }
+
+    .products-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.5rem;
+    }
+
+    .products-header h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: hsl(var(--foreground));
+    }
+
+    .product-card {
+      background: hsl(var(--background));
+      border: 1px solid hsl(var(--border));
+      border-radius: 0.5rem;
+      padding: 1.5rem;
+      margin-bottom: 1rem;
+      transition: var(--transition-smooth);
+    }
+
+    .product-status {
+      padding: 0.25rem 0.75rem;
+      border-radius: 1rem;
+      font-size: 0.75rem;
+      font-weight: 500;
+    }
+
+    .status-active {
+      background: #dcfce7;
+      color: #166534;
+    }
+
+    .product-card:hover {
+      box-shadow: var(--shadow-soft);
+    }
+
+    .product-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: start;
+      margin-bottom: 1rem;
+    }
+
+    .product-info h4 {
+      font-weight: 600;
+      margin-bottom: 0.25rem;
+    }
+
+    .product-info p {
+      color: hsl(var(--muted-foreground));
+      font-size: 0.875rem;
+    }
+
+    .product-actions {
+      display: flex;
+      gap: 0.5rem;
+    }
+
+    .btn-sm {
+      padding: 0.5rem 1rem;
+      font-size: 0.75rem;
+    }
+
+    .btn-danger {
+      background: #dc2626;
+      color: white;
+    }
+
+    .btn-danger:hover {
+      background: #b91c1c;
+    }
+
+    @media (max-width: 768px) {
+      .form-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .page-title h1 {
+        font-size: 2rem;
+      }
+
+      .form-actions {
+        flex-direction: column;
+      }
+
+      .product-header {
+        flex-direction: column;
+        gap: 1rem;
+      }
+
+      .product-actions {
+        align-self: flex-start;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<div class="page-container">
+  <!-- Page Header -->
+  <header th:insert="vendor-navbar.html"></header>
+
+  <!-- Page Main Content -->
+  <main class="page-main">
+    <div class="page-title">
+      <h1>Product Management</h1>
+      <p>Add and manage products for your Kaylia vendor store</p>
+    </div>
+
+    <div id="message" class="message"></div>
+
+    <div class="content-card">
+      <div class="product-management-tabs">
+        <a href="/vendor/add-product" class="tab-btn" >Add Product</a>
+        <a href="/vendor/manage-product" class="tab-btn active" >Manage Products</a>
+      </div>
+
+      <!-- Manage Products Tab -->
+      <div id="manage-products" class="tab-content active">
+        <div class="products-list">
+          <div class="products-header">
+            <h3>Your Products</h3>
+            <a class="btn-secondary" href="/vendor/manage-product">Refresh</a>
+          </div>
+          <div id="products-list-container">
+            <!-- Products will be loaded here -->
+            <div class="card-content">
+              <div th:each="products : ${products}">
+                <div style="display: flex; justify-content: space-between; align-items: center" class="product-details">
+                  <img th:src="@{/image/{id}(id=${products.id})}" th:alt="${products.name}" class="product-image" style=" width:150px; height: 100px">
+                  <div class="product-info">
+                    <h4 th:text="${products.name}">Vitamin C Brightening Serum</h4>
+                    <p>Rs <span th:text="${products.price}"></span></p>
+                  </div>
+                  <div style="display: flex; justify-content: space-between; gap: 14px" >
+                    <span class="product-status status-active">Active</span>
+                    <a th:href="@{'/vendor/remove-product/' + ${products.id}}" style="margin-top: 4px">
+                      <img th:src="@{/images/bin.png}" alt="bin" style="height: 16px; width: 14px; margin-left: 14px">
+                    </a>
+                  </div>
+                </div>
+                <hr style="margin-top: 12px;margin-bottom: 12px">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<script th:src="@{/js/script.js}"></script>
+<script>
+  // Theme toggle functionality
+  function toggleTheme() {
+    const html = document.documentElement;
+    const currentTheme = html.getAttribute('data-theme');
+    const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+
+    html.setAttribute('data-theme', newTheme);
+    localStorage.setItem('theme', newTheme);
+  }
+
+
+  // Reset form functionality
+  function resetForm() {
+    document.getElementById('product-form').reset();
+    hideImagePreview();
+    hideMessage();
+  }
+
+  // Show message functionality
+  function showMessage(message, type = 'success') {
+    const messageEl = document.getElementById('message');
+    messageEl.textContent = message;
+    messageEl.className = `message ${type}`;
+    messageEl.style.display = 'block';
+
+    // Auto hide after 5 seconds
+    setTimeout(hideMessage, 5000);
+  }
+
+  // Hide message functionality
+  function hideMessage() {
+    const messageEl = document.getElementById('message');
+    messageEl.style.display = 'none';
+  }
+
+
+  // Add product functionality
+  async function addProduct(event) {
+    event.preventDefault(); // stop form from refreshing the page
+
+    const form = document.getElementById("product-form");
+    const formData = new FormData(form);
+
+    try {
+      const response = await fetch("/product/add", {
+        method: "POST",
+        body: formData // FormData automatically sets multipart/form-data
+      });
+
+      const result = await response.json();
+
+      if(response.ok){
+        showMessage(result.message);
+      } else {
+        // API returned an error
+        const errorMessage = result.message || result.error || 'Image add failed. Please try again.';
+        showError(errorMessage);
+      }
+
+      form.reset();
+      document.getElementById("image-preview").style.display = "none";
+
+    } catch (error) {
+      console.error(error);
+
+      // Network or other errors
+      if (error.name === 'TypeError' && error.message.includes('fetch')) {
+        showError('Network error. Please check your connection and try again.');
+      } else {
+        showError('An unexpected error occurred. Please try again.');
+      }
+
+    }
+  }
+
+  // Delete product functionality
+  function deleteProduct(productId) {
+    if (confirm('Are you sure you want to delete this product?')) {
+      products = products.filter(p => p.id !== productId);
+      localStorage.setItem('kaylia-vendor-products', JSON.stringify(products));
+      showMessage('Product deleted successfully!', 'success');
+      refreshProductsList();
+    }
+  }
+
+  // Refresh products list
+  function refreshProductsList() {
+    const container = document.getElementById('products-list-container');
+
+    if (products.length === 0) {
+      container.innerHTML = '<p style="text-align: center; color: hsl(var(--muted-foreground)); padding: 2rem;">No products added yet. Use the "Add Product" tab to create your first product.</p>';
+      return;
+    }
+
+    container.innerHTML = products.map(product => `
+                <div class="product-card">
+                    <div class="product-header">
+                        <div class="product-info">
+                            <h4>${product.name}</h4>
+                            <p>Price: $${product.price}</p>
+                            <p>Added: ${new Date(product.dateAdded).toLocaleDateString()}</p>
+                        </div>
+                        <div class="product-actions">
+                            <button class="btn-secondary btn-sm" onclick="editProduct('${product.id}')">Edit</button>
+                            <button class="btn-danger btn-sm" onclick="deleteProduct('${product.id}')">Delete</button>
+                        </div>
+                    </div>
+                    <p><strong>Description:</strong> ${product.description}</p>
+                    <p><strong>Ingredients:</strong> ${product.ingredients}</p>
+                    <p><strong>Benefits:</strong> ${product.benefits}</p>
+                </div>
+            `).join('');
+  }
+
+  // Edit product functionality
+  function editProduct(productId) {
+    const product = products.find(p => p.id === productId);
+    if (product) {
+      // Switch to add product tab
+      switchTab('add-product');
+      document.querySelector('[onclick="switchTab(\'add-product\')"]').click();
+
+      // Fill form with product data
+      document.getElementById('product-name').value = product.name;
+      document.getElementById('product-price').value = product.price;
+      document.getElementById('product-description').value = product.description;
+      document.getElementById('product-ingredients').value = product.ingredients;
+      document.getElementById('product-benefits').value = product.benefits;
+
+      // Change form to edit mode
+      const form = document.getElementById('product-form');
+      form.dataset.editId = productId;
+      form.querySelector('button[type="submit"]').textContent = 'Update Product';
+    }
+  }
+
+  // Image preview functionality
+  function showImagePreview(src) {
+    const preview = document.getElementById('image-preview');
+    const img = document.getElementById('preview-img');
+    img.src = src;
+    preview.style.display = 'block';
+  }
+
+  function hideImagePreview() {
+    const preview = document.getElementById('image-preview');
+    preview.style.display = 'none';
+  }
+
+  // Initialize page
+  document.addEventListener('DOMContentLoaded', function() {
+    const savedTheme = localStorage.getItem('theme') || 'light';
+    document.documentElement.setAttribute('data-theme', savedTheme);
+
+    // Load products list
+    refreshProductsList();
+
+    // Handle image preview
+    document.getElementById('product-image').addEventListener('change', function(e) {
+      const file = e.target.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          showImagePreview(e.target.result);
+        };
+        reader.readAsDataURL(file);
+      } else {
+        hideImagePreview();
+      }
+    });
+
+    // Handle form submission
+    document.getElementById('product-form').addEventListener('submit', function(e) {
+      e.preventDefault();
+
+      const formData = new FormData(this);
+      const productData = {
+        name: formData.get('name'),
+        price: parseFloat(formData.get('price')),
+        description: formData.get('description'),
+        ingredients: formData.get('ingredients'),
+        benefits: formData.get('benefits')
+      };
+
+      // Handle image file (in real app, this would be uploaded to server)
+      const imageFile = formData.get('image');
+      if (imageFile && imageFile.size > 0) {
+        // For demo purposes, we'll use a placeholder
+        productData.image = 'https://images.unsplash.com/photo-1556228720-195a672e8a03?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80';
+      }
+
+      // Check if editing or adding
+      const editId = this.dataset.editId;
+      if (editId) {
+        // Update existing product
+        const index = products.findIndex(p => p.id === editId);
+        if (index !== -1) {
+          products[index] = { ...products[index], ...productData };
+          localStorage.setItem('kaylia-vendor-products', JSON.stringify(products));
+          showMessage('Product updated successfully!', 'success');
+
+          // Reset form to add mode
+          delete this.dataset.editId;
+          this.querySelector('button[type="submit"]').textContent = 'Add Product';
+        }
+      } else {
+        // Add new product
+        addProduct(productData);
+      }
+
+      resetForm();
+      refreshProductsList();
+    });
+  });
+</script>
+</body>
+</html>

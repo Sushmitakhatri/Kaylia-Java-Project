@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vendor Dashboard - Kaylia Skincare</title>
+    <meta name="description" content="Vendor dashboard for managing products and sales on Kaylia platform">
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <style>
+        .dashboard-container {
+            min-height: 100vh;
+            background: var(--gradient-cream);
+        }
+
+        .vendor-badge {
+            background: linear-gradient(135deg, #10b981, #059669);
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 1rem;
+            font-size: 0.875rem;
+            font-weight: 500;
+        }
+
+        .dashboard-main {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem 1rem;
+        }
+
+        .dashboard-title {
+            margin-bottom: 2rem;
+        }
+
+        .dashboard-title h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: hsl(var(--foreground));
+            margin-bottom: 0.5rem;
+        }
+
+        .dashboard-title p {
+            color: hsl(var(--muted-foreground));
+            font-size: 1.125rem;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+        }
+
+        .stat-card {
+            background: hsl(var(--card));
+            border-radius: 0.5rem;
+            padding: 1.5rem;
+            box-shadow: var(--shadow-soft);
+            border: 1px solid hsl(var(--border));
+        }
+
+        .stat-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .stat-icon {
+            width: 2.5rem;
+            height: 2.5rem;
+            border-radius: 0.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .stat-icon.products {
+            background: linear-gradient(135deg, #f59e0b, #d97706);
+        }
+
+        .stat-icon.sales {
+            background: linear-gradient(135deg, #10b981, #059669);
+        }
+
+        .stat-icon.orders {
+            background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+        }
+
+        .stat-icon.rating {
+            background: linear-gradient(135deg, #8b5cf6, #7c3aed);
+        }
+
+        .stat-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: hsl(var(--foreground));
+            margin-bottom: 0.25rem;
+        }
+
+        .stat-label {
+            color: hsl(var(--muted-foreground));
+            font-size: 0.875rem;
+        }
+
+        .stat-change {
+            font-size: 0.875rem;
+            font-weight: 500;
+        }
+
+        .stat-change.positive {
+            color: hsl(var(--success));
+        }
+
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: 1fr 4fr 1fr;
+            gap: 2rem;
+            margin-bottom: 2rem;
+            margin-top: 1rem;
+        }
+
+        .dashboard-card {
+            background: hsl(var(--card));
+            border-radius: 0.5rem;
+            box-shadow: var(--shadow-soft);
+            border: 1px solid hsl(var(--border));
+        }
+
+        .card-header {
+            padding: 1.5rem 1.5rem 0;
+            border-bottom: 1px solid hsl(var(--border));
+            margin-bottom: 1.5rem;
+        }
+
+        .card-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: hsl(var(--foreground));
+            margin-bottom: 0.5rem;
+        }
+
+        .card-description {
+            color: hsl(var(--muted-foreground));
+            font-size: 0.875rem;
+        }
+
+        .card-content {
+            padding: 0 1.5rem 1.5rem;
+        }
+
+        .product-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+            border-bottom: 1px solid hsl(var(--border));
+        }
+
+        .product-item:last-child {
+            border-bottom: none;
+        }
+
+        .product-details {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .product-image {
+            width: 4rem;
+            height: 4rem;
+            border-radius: 0.375rem;
+            object-fit: cover;
+        }
+
+        .product-info h4 {
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+        }
+
+        .product-info p {
+            color: hsl(var(--muted-foreground));
+            font-size: 0.875rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .product-status {
+            padding: 0.25rem 0.75rem;
+            border-radius: 1rem;
+            font-size: 0.75rem;
+            font-weight: 500;
+        }
+
+        .status-active {
+            background: #dcfce7;
+            color: #166534;
+        }
+
+        .status-pending {
+            background: #fef3c7;
+            color: #92400e;
+        }
+
+        .status-draft {
+            background: #f3f4f6;
+            color: #374151;
+        }
+
+        .quick-actions {
+            display: grid;
+            gap: 1rem;
+        }
+
+        .action-btn {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 1rem;
+            background: hsl(var(--background));
+            border: 1px solid hsl(var(--border));
+            border-radius: 0.5rem;
+            text-decoration: none;
+            color: hsl(var(--foreground));
+            transition: var(--transition-smooth);
+        }
+
+        .action-btn:hover {
+            background: hsl(var(--accent));
+            transform: translateY(-1px);
+        }
+
+        .action-icon {
+            width: 1.5rem;
+            height: 1.5rem;
+            color: hsl(var(--primary));
+        }
+
+        .recent-sales {
+            grid-column: span 2;
+        }
+
+        .sale-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+            border-bottom: 1px solid hsl(var(--border));
+        }
+
+        .sale-item:last-child {
+            border-bottom: none;
+        }
+
+        .sale-info h4 {
+            font-weight: 500;
+            margin-bottom: 0.25rem;
+        }
+
+        .sale-info p {
+            color: hsl(var(--muted-foreground));
+            font-size: 0.875rem;
+        }
+
+        .sale-amount {
+            font-weight: 600;
+            color: hsl(var(--success));
+        }
+
+        @media (max-width: 768px) {
+            .dashboard-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .recent-sales {
+                grid-column: span 1;
+            }
+
+            .dashboard-title h1 {
+                font-size: 2rem;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="dashboard-container">
+    <!-- Header --->
+    <header th:insert="vendor-navbar.html"></header>
+
+    <!-- Dashboard Main Content -->
+    <main class="dashboard-main">
+        <div class="dashboard-title">
+            <h1>Analytics</h1>
+            <p>Overview of your products, sales, and your skincare business</p>
+        </div>
+
+        <!-- Statistics Cards -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-header">
+                    <div>
+                        <div class="stat-value" th:text="${activeProducts}">24</div>
+                        <div class="stat-label">Active Products</div>
+                    </div>
+                    <div class="stat-icon products">
+                        <svg width="20" height="20" fill="white" viewBox="0 0 24 24">
+                            <path d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/>
+                        </svg>
+                    </div>
+                </div>
+                <div class="stat-change positive">+3 added this month</div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-header">
+                    <div>
+                        <div class="stat-value">Rs. 12,847</div>
+                        <div class="stat-label">Monthly Sales</div>
+                    </div>
+                    <div class="stat-icon sales">
+                        <svg width="20" height="20" fill="white" viewBox="0 0 24 24">
+                            <path d="M12 2v20M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/>
+                        </svg>
+                    </div>
+                </div>
+                <div class="stat-change positive">+22.5% from last month</div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-header">
+                    <div>
+                        <div class="stat-value">187</div>
+                        <div class="stat-label">Orders Fulfilled</div>
+                    </div>
+                    <div class="stat-icon orders">
+                        <svg width="20" height="20" fill="white" viewBox="0 0 24 24">
+                            <path d="M3 3h2l.4 2M7 13h10l4-8H5.4m0 0L7 13m0 0l-2.293 2.293c-.63.63-.184 1.707.707 1.707H19M7 13v4a2 2 0 002 2h2m8-6v4a2 2 0 01-2 2h-2m-8-6h8"/>
+                        </svg>
+                    </div>
+                </div>
+                <div class="stat-change positive">+18 this week</div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-header">
+                    <div>
+                        <div class="stat-value">4.8</div>
+                        <div class="stat-label">Average Rating</div>
+                    </div>
+                    <div class="stat-icon rating">
+                        <svg width="20" height="20" fill="white" viewBox="0 0 24 24">
+                            <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                        </svg>
+                    </div>
+                </div>
+                <div class="stat-change positive">Based on 156 reviews</div>
+            </div>
+        </div>
+
+        <!-- Recent Sales -->
+        <div class="dashboard-card recent-sales">
+            <div class="card-header">
+                <h3 class="card-title">Recent Sales</h3>
+                <p class="card-description">Your latest transactions and earnings</p>
+            </div>
+            <div class="card-content">
+                <div class="sale-item">
+                    <div class="sale-info">
+                        <h4>Vitamin C Brightening Serum</h4>
+                        <p>Sold to Sarah Johnson • Order #KAY-2024-001</p>
+                    </div>
+                    <div class="sale-amount">+Rs 450.00</div>
+                </div>
+                <div class="sale-item">
+                    <div class="sale-info">
+                        <h4>Retinol Renewal Night Cream</h4>
+                        <p>Sold to Michael Chen • Order #KAY-2024-002</p>
+                    </div>
+                    <div class="sale-amount">+Rs 650.00</div>
+                </div>
+                <div class="sale-item">
+                    <div class="sale-info">
+                        <h4>Gentle Foaming Cleanser</h4>
+                        <p>Sold to Emma Davis • Order #KAY-2024-003</p>
+                    </div>
+                    <div class="sale-amount">+Rs 3450.00</div>
+                </div>
+                <div class="sale-item">
+                    <div class="sale-info">
+                        <h4>Hyaluronic Acid Serum</h4>
+                        <p>Sold to James Wilson • Order #KAY-2024-004</p>
+                    </div>
+                    <div class="sale-amount">+Rs 550.00</div>
+                </div>
+                <div class="sale-item">
+                    <div class="sale-info">
+                        <h4>Niacinamide Treatment</h4>
+                        <p>Sold to Lisa Anderson • Order #KAY-2024-005</p>
+                    </div>
+                    <div class="sale-amount">+Rs 402.00</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Dashboard Grid -->
+        <div class="dashboard-grid">
+            <!-- Product Management -->
+            <div>
+
+            </div>
+            <div class="dashboard-card">
+                <div class="card-header">
+                    <h3 class="card-title">Your Products</h3>
+                    <p class="card-description">Manage your product listings and inventory</p>
+                </div>
+                <div style="margin-top: -24px" class="card-content">
+                    <div class="product-item" th:each="products : ${products}">
+                        <div class="product-details">
+                            <img th:src="@{/image/{id}(id=${products.id})}" th:alt="${products.name}" class="product-image" style=" width:150px; height: 100px">
+                            <div class="product-info">
+                                <h4 th:text="${products.name}">Vitamin C Brightening Serum</h4>
+                                <p>Rs <span th:text="${products.price}"></span></p>
+                            </div>
+                        </div>
+                        <span class="product-status status-active">Active</span>
+                    </div>
+
+                    <div th:if="${products == null or products.isEmpty()}">
+                        <p>No products in your inventory! Go to add new product to list you product.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div>
+
+            </div>
+        </div>
+    </main>
+</div>
+
+<script th:src="@{/js/script.js}"></script>
+<script>
+    function toggleTheme() {
+        const html = document.documentElement;
+        const currentTheme = html.getAttribute('data-theme');
+        const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+
+        html.setAttribute('data-theme', newTheme);
+        localStorage.setItem('theme', newTheme);
+    }
+
+
+    // Initialize theme
+    document.addEventListener('DOMContentLoaded', function() {
+        const savedTheme = localStorage.getItem('theme') || 'light';
+        document.documentElement.setAttribute('data-theme', savedTheme);
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,129 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&display=swap');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  /* Primary Colors */
+  --color-primary: #E6C0B9; /* rose-300 - Warm, soft rose for primary elements */
+  --color-primary-50: #FDF7F6; /* rose-50 */
+  --color-primary-100: #F9EDEA; /* rose-100 */
+  --color-primary-200: #F3D9D3; /* rose-200 */
+  --color-primary-300: #E6C0B9; /* rose-300 */
+  --color-primary-400: #D9A79E; /* rose-400 */
+  --color-primary-500: #CC8E83; /* rose-500 */
+  --color-primary-600: #BF7568; /* rose-600 */
+  --color-primary-700: #B25C4D; /* rose-700 */
+  --color-primary-800: #A54332; /* rose-800 */
+  --color-primary-900: #982A17; /* rose-900 */
+
+  /* Secondary Colors */
+  --color-secondary: #F4F1ED; /* cream-100 - Soft canvas, premium backdrop for product focus */
+  --color-secondary-50: #FEFCFA; /* cream-50 */
+  --color-secondary-100: #F4F1ED; /* cream-100 */
+  --color-secondary-200: #EAE4DB; /* cream-200 */
+  --color-secondary-300: #DFD7C9; /* cream-300 */
+  --color-secondary-400: #D5CAB7; /* cream-400 */
+  --color-secondary-500: #CABDA5; /* cream-500 */
+
+  /* Accent Colors */
+  --color-accent: #E8A87C; /* peach-400 - Warm confidence, gentle call-to-action moments */
+  --color-accent-50: #FDF7F3; /* peach-50 */
+  --color-accent-100: #F9E8DC; /* peach-100 */
+  --color-accent-200: #F3D1B9; /* peach-200 */
+  --color-accent-300: #EDBA96; /* peach-300 */
+  --color-accent-400: #E8A87C; /* peach-400 */
+  --color-accent-500: #E29662; /* peach-500 */
+  --color-accent-600: #DC8448; /* peach-600 */
+  --color-accent-700: #C7722E; /* peach-700 */
+
+  /* Background Colors */
+  --color-background: #FEFEFE; /* neutral-50 - Clean foundation, maximum content clarity */
+  --color-surface: #F9F7F4; /* warm-50 - Subtle elevation, card and section definition */
+
+  /* Text Colors */
+  --color-text-primary: #2D3748; /* gray-700 - Comfortable reading, professional without harsh */
+  --color-text-secondary: #718096; /* gray-500 - Clear hierarchy, supporting information tone */
+
+  /* Status Colors */
+  --color-success: #68D391; /* green-400 - Positive reinforcement, routine completion celebration */
+  --color-warning: #F6AD55; /* orange-400 - Gentle urgency, low stock without panic */
+  --color-error: #FC8181; /* red-400 - Helpful concern, form guidance not punishment */
+
+  /* Border Colors */
+  --color-border: #E2E8F0; /* gray-200 - Minimal borders for form inputs and content separation */
+  --color-border-focus: #E8A87C; /* peach-400 - Focus states */
+
+  /* Shadow Colors */
+  --shadow-soft: 0 4px 6px -1px rgba(0, 0, 0, 0.1); /* Subtle depth for floating elements */
+  --shadow-card: 0 1px 3px 0 rgba(0, 0, 0, 0.1); /* Minimal card elevation */
+}
+
+@layer base {
+  body {
+    font-family: 'Inter', sans-serif;
+    color: var(--color-text-primary);
+    background-color: var(--color-background);
+    line-height: 1.6;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+    line-height: 1.3;
+  }
+
+  .font-accent {
+    font-family: 'Playfair Display', serif;
+  }
+}
+
+@layer components {
+  .btn-primary {
+    @apply bg-primary text-white px-6 py-3 rounded-lg font-semibold transition-all duration-300 ease-out hover:bg-primary-600 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2;
+  }
+
+  .btn-secondary {
+    @apply bg-secondary text-text-primary px-6 py-3 rounded-lg font-semibold border border-border transition-all duration-300 ease-out hover:bg-primary-50 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2;
+  }
+
+  .btn-accent {
+    @apply bg-accent text-white px-6 py-3 rounded-lg font-semibold transition-all duration-300 ease-out hover:bg-accent-500 focus:outline-none focus:ring-2 focus:ring-accent-400 focus:ring-offset-2;
+  }
+
+  .card {
+    @apply bg-surface rounded-lg border border-border p-6 transition-all duration-300 ease-out;
+  }
+
+  .card-elevated {
+    @apply bg-white rounded-lg p-6 transition-all duration-300 ease-out;
+    box-shadow: var(--shadow-soft);
+  }
+
+  .input-field {
+    @apply w-full px-4 py-3 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-all duration-200 ease-out;
+  }
+
+  .text-gradient {
+    @apply bg-gradient-to-r from-primary-600 to-accent-500 bg-clip-text text-transparent;
+  }
+}
+
+@layer utilities {
+  .transition-smooth {
+    transition: all 300ms ease-out;
+  }
+
+  .transition-quick {
+    transition: all 200ms ease-out;
+  }
+
+  .shadow-floating {
+    box-shadow: var(--shadow-soft);
+  }
+
+  .shadow-subtle {
+    box-shadow: var(--shadow-card);
+  }
+}

@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>images</title>
+</head>
+<body>
+
+<h1>Product List</h1>
+
+<!------------ for testing image get from db ----------->
+
+<div th:each="product : ${products}">
+  <h3 th:text="${product.name}"></h3>
+  <p>Price: <span th:text="${product.price}"></span></p>
+  <img th:src="@{/admin/images/{id}(id=${product.id})}" alt="Product Image" width="200">
+</div>
+
+</body>
+</html>

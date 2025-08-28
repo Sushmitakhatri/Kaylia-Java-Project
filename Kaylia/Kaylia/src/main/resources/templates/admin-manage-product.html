@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Product - Kaylia Skincare Admin</title>
+    <meta name="description" content="Add and manage products for Kaylia skincare e-commerce platform">
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <style>
+        .page-container {
+            min-height: 100vh;
+            background: var(--gradient-cream);
+        }
+
+        .page-header {
+            background: hsl(var(--card));
+            border-bottom: 1px solid hsl(var(--border));
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 50;
+        }
+
+        .page-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+
+        .page-logo {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            text-decoration: none;
+            color: hsl(var(--foreground));
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        .page-logo .logo-icon {
+            width: 2rem;
+            height: 2rem;
+            background: var(--gradient-rose);
+            border-radius: 50%;
+        }
+
+        .page-actions {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .admin-badge {
+            background: var(--gradient-rose);
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 1rem;
+            font-size: 0.875rem;
+            font-weight: 500;
+        }
+
+        .back-btn {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            background: hsl(var(--muted) / 0.3);
+            border: 1px solid hsl(var(--border));
+            border-radius: 0.375rem;
+            text-decoration: none;
+            color: hsl(var(--foreground));
+            transition: var(--transition-smooth);
+            font-size: 0.875rem;
+        }
+
+        .back-btn:hover {
+            background: hsl(var(--muted) / 0.5);
+            border-color: hsl(var(--primary));
+        }
+
+        .page-main {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem 1rem;
+        }
+
+        .page-title {
+            margin-bottom: 2rem;
+        }
+
+        .page-title h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: hsl(var(--foreground));
+            margin-bottom: 0.5rem;
+        }
+
+        .page-title p {
+            color: hsl(var(--muted-foreground));
+            font-size: 1.125rem;
+        }
+
+        .product-management-tabs {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 2rem;
+            border-bottom: 1px solid hsl(var(--border));
+        }
+
+        .product-status {
+            padding: 0.25rem 0.75rem;
+            border-radius: 1rem;
+            font-size: 0.75rem;
+            font-weight: 500;
+        }
+
+        .status-active {
+            background: #dcfce7;
+            color: #166534;
+        }
+
+        .tab-btn {
+            padding: 0.75rem 1.5rem;
+            background: none;
+            border: none;
+            border-bottom: 2px solid transparent;
+            color: hsl(var(--muted-foreground));
+            cursor: pointer;
+            transition: var(--transition-smooth);
+            font-size: 0.875rem;
+            font-weight: 500;
+        }
+
+        .tab-btn.active {
+            color: hsl(var(--primary));
+            border-bottom-color: hsl(var(--primary));
+        }
+
+        .tab-btn:hover {
+            color: hsl(var(--foreground));
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .content-card {
+            background: hsl(var(--card));
+            border-radius: 0.5rem;
+            border: 1px solid hsl(var(--border));
+            box-shadow: var(--shadow-elegant);
+            padding: 2rem;
+        }
+
+        .product-form {
+            max-width: 100%;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .form-group.full-width {
+            grid-column: 1 / -1;
+        }
+
+        .form-group label {
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: hsl(var(--foreground));
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            padding: 0.75rem;
+            border: 1px solid hsl(var(--border));
+            border-radius: 0.375rem;
+            background: hsl(var(--background));
+            color: hsl(var(--foreground));
+            font-size: 0.875rem;
+            transition: var(--transition-smooth);
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: hsl(var(--primary));
+            box-shadow: 0 0 0 3px hsl(var(--primary) / 0.1);
+        }
+
+        .form-group small {
+            font-size: 0.75rem;
+            color: hsl(var(--muted-foreground));
+        }
+
+        .form-actions {
+            display: flex;
+            gap: 1rem;
+            justify-content: flex-end;
+            padding-top: 1rem;
+            border-top: 1px solid hsl(var(--border));
+        }
+
+        .btn-primary {
+            padding: 0.75rem 2rem;
+            background: hsl(var(--primary));
+            color: hsl(var(--primary-foreground));
+            border: none;
+            border-radius: 0.375rem;
+            font-size: 0.875rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--transition-smooth);
+        }
+
+        .btn-primary:hover {
+            background: hsl(var(--primary) / 0.9);
+            transform: translateY(-1px);
+        }
+
+        .btn-secondary {
+            padding: 0.75rem 2rem;
+            background: hsl(var(--muted) / 0.3);
+            color: hsl(var(--foreground));
+            border: 1px solid hsl(var(--border));
+            border-radius: 0.375rem;
+            font-size: 0.875rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--transition-smooth);
+        }
+
+        .btn-secondary:hover {
+            background: hsl(var(--muted) / 0.5);
+            border-color: hsl(var(--primary));
+        }
+
+        .products-list {
+            max-width: 100%;
+        }
+
+        .products-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .products-header h3 {
+            margin: 0;
+            font-size: 1.125rem;
+            font-weight: 600;
+            color: hsl(var(--foreground));
+        }
+
+        .product-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem;
+            border: 1px solid hsl(var(--border));
+            border-radius: 0.5rem;
+            margin-bottom: 1rem;
+            background: hsl(var(--background));
+        }
+
+        .product-item img {
+            width: 60px;
+            height: 60px;
+            object-fit: cover;
+            border-radius: 0.375rem;
+        }
+
+        .product-item-info {
+            flex: 1;
+        }
+
+        .product-item-name {
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: hsl(var(--foreground));
+            margin-bottom: 0.25rem;
+        }
+
+        .product-item-details {
+            font-size: 0.75rem;
+            color: hsl(var(--muted-foreground));
+        }
+
+        .product-item-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .btn-small {
+            padding: 0.375rem 0.75rem;
+            font-size: 0.75rem;
+            border-radius: 0.25rem;
+        }
+
+        .btn-danger {
+            background: hsl(0 84% 60%);
+            color: white;
+            border: none;
+            cursor: pointer;
+            transition: var(--transition-smooth);
+        }
+
+        .btn-danger:hover {
+            background: hsl(0 84% 50%);
+        }
+
+        .message {
+            padding: 1rem;
+            border-radius: 0.375rem;
+            margin-bottom: 1rem;
+            font-size: 0.875rem;
+        }
+
+        .message.success {
+            background: hsl(120 100% 95%);
+            color: hsl(120 100% 25%);
+            border: 1px solid hsl(120 100% 85%);
+        }
+
+        .message.error {
+            background: hsl(0 100% 95%);
+            color: hsl(0 100% 35%);
+            border: 1px solid hsl(0 100% 85%);
+        }
+
+        @media (max-width: 768px) {
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .form-actions {
+                flex-direction: column;
+            }
+
+            .btn-primary,
+            .btn-secondary {
+                width: 100%;
+            }
+
+            .product-management-tabs {
+                flex-direction: column;
+            }
+
+            .tab-btn {
+                text-align: left;
+                border-bottom: none;
+                border-left: 2px solid transparent;
+                padding-left: 1rem;
+            }
+
+            .tab-btn.active {
+                border-left-color: hsl(var(--primary));
+                border-bottom-color: transparent;
+            }
+
+            .product-item {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .product-item-actions {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .page-nav {
+                flex-direction: column;
+                gap: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="page-container">
+    <!-- Page Header -->
+    <header class="page-header">
+        <div class="page-nav">
+            <a href="index.html" class="page-logo">
+                <span class="logo-icon"></span>
+                Kaylia
+            </a>
+            <div class="page-actions">
+                <a href="/admin/dashboard" class="back-btn">
+                    <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+                    </svg>
+                    Back to Dashboard
+                </a>
+                <span class="admin-badge">Admin</span>
+                <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path class="sun" d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/>
+                        <circle class="sun" cx="12" cy="12" r="5"/>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Page Main Content -->
+    <main class="page-main">
+        <div class="page-title">
+            <h1>Product Management</h1>
+            <p>Add and manage products for your Kaylia skincare store</p>
+        </div>
+
+        <div class="content-card">
+            <div class="product-management-tabs">
+                <a href="/admin/add-product" class="tab-btn" >Add Product</a>
+                <a href="/admin/manage-product" class="tab-btn active" >Manage Products</a>
+            </div>
+
+            <!-- Manage Products Tab -->
+            <div id="manage-products" class="tab-content active">
+                <div class="products-list">
+                    <div class="products-header">
+                        <h3>My Products</h3>
+                        <a class="btn-secondary" href="/admin/manage-product">Refresh</a>
+                    </div>
+                    <div id="products-list-container">
+                        <!-- Products will be loaded here -->
+                        <div class="card-content">
+                            <div th:each="products : ${products}">
+                                <div style="display: flex; justify-content: space-between; align-items: center" class="product-details">
+                                    <img th:src="@{/image/{id}(id=${products.id})}" th:alt="${products.name}" class="product-image" style=" width:150px; height: 100px">
+                                    <div class="product-info">
+                                        <h4 th:text="${products.name}">Vitamin C Brightening Serum</h4>
+                                        <p>Rs <span th:text="${products.price}"></span></p>
+                                    </div>
+                                    <div style="display: flex; justify-content: space-between; gap: 14px" >
+                                        <span class="product-status status-active">Active</span>
+                                        <a th:href="@{'/admin/remove-product/' + ${products.id}}" style="margin-top: 4px">
+                                            <img th:src="@{/images/bin.png}" alt="bin" style="height: 16px; width: 14px; margin-left: 14px">
+                                        </a>
+                                    </div>
+                                </div>
+                                <hr style="margin-top: 12px;margin-bottom: 12px">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+</div>
+
+<script th:src="@{/js/script.js}"></script>
+<script>
+    // Theme toggle functionality
+    function toggleTheme() {
+        const html = document.documentElement;
+        const currentTheme = html.getAttribute('data-theme');
+        const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+
+        html.setAttribute('data-theme', newTheme);
+        localStorage.setItem('theme', newTheme);
+    }
+
+
+    // Reset form functionality
+    function resetForm() {
+        document.getElementById('product-form').reset();
+        hideMessage();
+    }
+
+    // Show message functionality
+    function showMessage(message, type = 'success') {
+        hideMessage();
+        const messageDiv = document.createElement('div');
+        messageDiv.className = `message ${type}`;
+        messageDiv.textContent = message;
+
+        const form = document.getElementById('product-form');
+        form.parentNode.insertBefore(messageDiv, form);
+
+        setTimeout(() => hideMessage(), 5000);
+    }
+
+    // Hide message functionality
+    function hideMessage() {
+        const existingMessage = document.querySelector('.message');
+        if (existingMessage) {
+            existingMessage.remove();
+        }
+    }
+
+
+    // Initialize page
+    document.addEventListener('DOMContentLoaded', function() {
+        const savedTheme = localStorage.getItem('theme') || 'light';
+        document.documentElement.setAttribute('data-theme', savedTheme);
+
+        refreshProductsList();
+
+        // Handle form submission
+        document.getElementById('product-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const formData = new FormData(this);
+            const productData = {
+                name: formData.get('name').trim(),
+                price: parseFloat(formData.get('price')),
+                category: formData.get('category'),
+                rating: formData.get('rating'),
+                image: formData.get('image').trim(),
+                description: formData.get('description').trim(),
+                badge: formData.get('badge') || null,
+                stock: formData.get('stock') ? parseInt(formData.get('stock')) : null
+            };
+
+            // Validation
+            if (!productData.name || !productData.price || !productData.category || !productData.image || !productData.description) {
+                showMessage('Please fill in all required fields.', 'error');
+                return;
+            }
+
+            if (productData.price <= 0) {
+                showMessage('Price must be greater than 0.', 'error');
+                return;
+            }
+
+            // Check if editing existing product
+            const editingId = this.dataset.editingId;
+            if (editingId) {
+                const productIndex = products.findIndex(p => p.id === editingId);
+                if (productIndex !== -1) {
+                    products[productIndex] = { ...products[productIndex], ...productData };
+                    localStorage.setItem('kaylia-products', JSON.stringify(products));
+                    showMessage('Product updated successfully!', 'success');
+                }
+
+                delete this.dataset.editingId;
+                document.querySelector('#product-form button[type="submit"]').textContent = 'Add Product';
+            } else {
+                addProduct(productData);
+                showMessage('Product added successfully!', 'success');
+            }
+
+            this.reset();
+
+            if (document.getElementById('manage-products').classList.contains('active')) {
+                refreshProductsList();
+            }
+        });
+    });
+</script>
+</body>
+</html>

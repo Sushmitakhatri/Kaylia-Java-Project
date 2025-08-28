@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Order Confirmed - Kaylia Skincare</title>
+  <meta name="description" content="Your Kaylia skincare order has been confirmed. Track your order and get ready for beautiful, healthy skin.">
+  <link rel="stylesheet" th:href="@{/css/styles.css}">
+  <style>
+    .success-section {
+      padding: 4rem 0;
+      min-height: 80vh;
+      display: flex;
+      align-items: center;
+    }
+
+    .success-container {
+      max-width: 800px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .success-icon {
+      width: 5rem;
+      height: 5rem;
+      background: var(--gradient-rose);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 2rem;
+      animation: successPulse 2s ease-in-out;
+    }
+
+    @keyframes successPulse {
+      0% { transform: scale(0.8); opacity: 0.5; }
+      50% { transform: scale(1.1); opacity: 1; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+
+    .success-content {
+      background: hsl(var(--card));
+      border-radius: 1rem;
+      box-shadow: var(--shadow-elegant);
+      padding: 3rem;
+      margin-bottom: 2rem;
+    }
+
+    .order-details {
+      background: hsl(var(--muted) / 0.3);
+      border-radius: 0.75rem;
+      padding: 2rem;
+      margin: 2rem 0;
+      text-align: left;
+    }
+
+    .detail-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.75rem 0;
+      border-bottom: 1px solid hsl(var(--border));
+    }
+
+    .detail-row:last-child {
+      border-bottom: none;
+    }
+
+    .detail-label {
+      font-weight: 500;
+      color: hsl(var(--muted-foreground));
+    }
+
+    .detail-value {
+      font-weight: 600;
+      color: hsl(var(--foreground));
+    }
+
+    .tracking-section {
+      background: hsl(var(--primary) / 0.05);
+      border: 1px solid hsl(var(--primary) / 0.2);
+      border-radius: 0.75rem;
+      padding: 1.5rem;
+      margin: 2rem 0;
+    }
+
+    .action-buttons {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-top: 2rem;
+    }
+
+    .btn-outline {
+      background: transparent;
+      border: 2px solid hsl(var(--primary));
+      color: hsl(var(--primary));
+    }
+
+    .btn-outline:hover {
+      background: hsl(var(--primary));
+      color: white;
+    }
+
+    @media (max-width: 768px) {
+      .success-content {
+        padding: 2rem;
+      }
+
+      .action-buttons {
+        flex-direction: column;
+      }
+
+      .action-buttons .btn {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+<!-- Header -->
+<header th:insert="navbar.html"></header>
+
+<!-- Success Section -->
+<section class="success-section">
+  <div class="container">
+    <div class="success-container">
+      <div class="success-content">
+        <div class="success-icon">
+          <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3">
+            <path d="M20 6L9 17l-5-5"/>
+          </svg>
+        </div>
+
+        <h1 class="font-serif" style="font-size: 2.5rem; font-weight: 700; margin-bottom: 1rem; color: hsl(var(--primary));">
+          Order Confirmed!
+        </h1>
+
+        <p style="font-size: 1.125rem; color: hsl(var(--muted-foreground)); margin-bottom: 2rem;">
+          Thank you for your purchase! Your order has been successfully processed and you'll receive a confirmation email shortly.
+        </p>
+
+        <div class="order-details">
+          <h3 style="font-weight: 600; font-size: 1.25rem; margin-bottom: 1.5rem; text-align: center;">Order Details</h3>
+
+          <div class="detail-row">
+            <span class="detail-label">Order Number</span>
+            <span class="detail-value" th:text="'#KAY-2025-' + ${order.id}"></span>
+          </div>
+
+          <div class="detail-row">
+            <span class="detail-label">Order Date</span>
+            <span class="detail-value" th:text="${#dates.format(orderDate, 'yyyy-MM-dd HH:mm')}"></span>
+          </div>
+
+          <div class="detail-row">
+            <span class="detail-label">Total Amount</span>
+            <span class="detail-value" th:text="'Rs ' + ${order.totalAmount}" style="color: hsl(var(--primary));"></span>
+          </div>
+
+          <div class="detail-row">
+            <span class="detail-label">Payment Method</span>
+            <span class="detail-value" th:text="${order.totalAmount}"></span>
+          </div>
+
+          <div class="detail-row">
+            <span class="detail-label">Shipping Address</span>
+            <span class="detail-value" th:text="${order.address + ', ' + order.city + ', ' + order.state}"></span>
+          </div>
+        </div>
+
+        <div class="tracking-section">
+          <h4 style="font-weight: 600; margin-bottom: 1rem; color: hsl(var(--primary));">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align: text-bottom; margin-right: 0.5rem;">
+              <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+              <circle cx="12" cy="12" r="3"/>
+            </svg>
+            Track Your Order
+          </h4>
+          <p style="margin-bottom: 1rem; color: hsl(var(--muted-foreground));">
+            Your order is being prepared for shipment. You'll receive a tracking number via email within 24 hours.
+          </p>
+          <p style="font-weight: 500;">
+            Estimated delivery: <span style="color: hsl(var(--primary));">3-5 business days</span>
+          </p>
+        </div>
+
+        <div class="action-buttons">
+          <a href="/dashboard" class="btn btn-primary">
+            View Order History
+            <svg style="margin-left: 0.5rem;" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M9 11l3 3 8-8"/>
+            </svg>
+          </a>
+
+          <a href="/products" class="btn btn-outline">
+            Continue Shopping
+            <svg style="margin-left: 0.5rem;" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M5 12h14M12 5l7 7-7 7"/>
+            </svg>
+          </a>
+
+          <a href="/" class="btn btn-outline">
+            Back to Home
+            <svg style="margin-left: 0.5rem;" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+            </svg>
+          </a>
+        </div>
+      </div>
+
+      <!-- Additional Information -->
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; margin-top: 3rem;">
+        <div style="background: hsl(var(--card)); border-radius: 0.75rem; padding: 1.5rem; text-align: center; box-shadow: var(--shadow-soft);">
+          <div style="width: 3rem; height: 3rem; background: hsl(var(--primary) / 0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem;">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="hsl(var(--primary))" stroke-width="2">
+              <path d="M4 4h16v16H4z"/>
+              <path d="M22 6l-10 7L2 6"/>
+            </svg>
+          </div>
+          <h4 style="font-weight: 600; margin-bottom: 0.5rem;">Email Confirmation</h4>
+          <p style="color: hsl(var(--muted-foreground)); font-size: 0.875rem;">Check your inbox for order details and tracking information.</p>
+        </div>
+
+        <div style="background: hsl(var(--card)); border-radius: 0.75rem; padding: 1.5rem; text-align: center; box-shadow: var(--shadow-soft);">
+          <div style="width: 3rem; height: 3rem; background: hsl(var(--primary) / 0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem;">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="hsl(var(--primary))" stroke-width="2">
+              <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+              <circle cx="12" cy="10" r="3"/>
+            </svg>
+          </div>
+          <h4 style="font-weight: 600; margin-bottom: 0.5rem;">Fast Shipping</h4>
+          <p style="color: hsl(var(--muted-foreground)); font-size: 0.875rem;">Free shipping on all orders. Your products will arrive in 3-5 business days.</p>
+        </div>
+
+        <div style="background: hsl(var(--card)); border-radius: 0.75rem; padding: 1.5rem; text-align: center; box-shadow: var(--shadow-soft);">
+          <div style="width: 3rem; height: 3rem; background: hsl(var(--primary) / 0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem;">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="hsl(var(--primary))" stroke-width="2">
+              <path d="M9 12l2 2 4-4"/>
+              <path d="M21 12c0 4.97-4.03 9-9 9s-9-4.03-9-9 4.03-9 9-9 9 4.03 9 9z"/>
+            </svg>
+          </div>
+          <h4 style="font-weight: 600; margin-bottom: 0.5rem;">Quality Guarantee</h4>
+          <p style="color: hsl(var(--muted-foreground)); font-size: 0.875rem;">30-day money-back guarantee on all skincare products.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<div th:insert="footer.html"></div>
+
+<script th:src="@{/js/script.js}"></script>
+<script>
+
+  // Add some celebration confetti effect (optional)
+  function createConfetti() {
+    const colors = ['#ff6b9d', '#f8b500', '#00d4aa', '#7b68ee'];
+    for (let i = 0; i < 50; i++) {
+      setTimeout(() => {
+        const confetti = document.createElement('div');
+        confetti.style.cssText = `
+                        position: fixed;
+                        top: -10px;
+                        left: ${Math.random() * 100}%;
+                        width: 10px;
+                        height: 10px;
+                        background: ${colors[Math.floor(Math.random() * colors.length)]};
+                        border-radius: 50%;
+                        pointer-events: none;
+                        animation: fall 3s linear forwards;
+                        z-index: 1000;
+                    `;
+        document.body.appendChild(confetti);
+
+        setTimeout(() => confetti.remove(), 3000);
+      }, i * 50);
+    }
+  }
+
+  // Add CSS animation for confetti
+  const style = document.createElement('style');
+  style.textContent = `
+            @keyframes fall {
+                to {
+                    transform: translateY(100vh) rotate(360deg);
+                    opacity: 0;
+                }
+            }
+        `;
+  document.head.appendChild(style);
+
+  // Trigger confetti on page load
+  setTimeout(createConfetti, 500);
+</script>
+</body>
+</html>

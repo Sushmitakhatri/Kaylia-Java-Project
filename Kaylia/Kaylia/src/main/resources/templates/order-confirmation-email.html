@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Order Confirmation - Kaylia Skincare</title>
+  <style>
+    /* Email-safe CSS */
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+      background-color: #f8f9fa;
+      color: #333333;
+      line-height: 1.6;
+    }
+
+    .email-container {
+      max-width: 600px;
+      margin: 0 auto;
+      background-color: #ffffff;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .header {
+      background: linear-gradient(135deg, #ff6b9d 0%, #f8b500 100%);
+      padding: 40px 30px;
+      text-align: center;
+    }
+
+    .logo {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      color: white;
+      text-decoration: none;
+      font-size: 28px;
+      font-weight: 700;
+      font-family: 'Playfair Display', serif;
+    }
+
+    .logo-icon {
+      width: 36px;
+      height: 36px;
+      background: rgba(255, 255, 255, 0.2);
+      border-radius: 50%;
+      display: inline-block;
+    }
+
+    .content {
+      padding: 40px 30px;
+    }
+
+    .success-message {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .success-icon {
+      width: 60px;
+      height: 60px;
+      background: linear-gradient(135deg, #ff6b9d 0%, #f8b500 100%);
+      border-radius: 50%;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 20px;
+    }
+
+    .title {
+      font-size: 24px;
+      font-weight: 700;
+      color: #ff6b9d;
+      margin: 0 0 10px 0;
+    }
+
+    .subtitle {
+      font-size: 16px;
+      color: #666666;
+      margin: 0;
+    }
+
+    .order-details {
+      background-color: #f8f9fa;
+      border-radius: 8px;
+      padding: 25px;
+      margin: 30px 0;
+    }
+
+    .order-details h3 {
+      font-size: 18px;
+      font-weight: 600;
+      color: #333333;
+      margin: 0 0 20px 0;
+      text-align: center;
+    }
+
+    .detail-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 0;
+      border-bottom: 1px solid #e9ecef;
+    }
+
+    .detail-row:last-child {
+      border-bottom: none;
+    }
+
+    .detail-label {
+      font-weight: 500;
+      color: #666666;
+      font-size: 14px;
+    }
+
+    .detail-value {
+      font-weight: 600;
+      color: #333333;
+      font-size: 14px;
+    }
+
+    .total-amount {
+      color: #ff6b9d !important;
+      font-size: 16px !important;
+    }
+
+    .footer {
+      background-color: #f8f9fa;
+      padding: 30px;
+      text-align: center;
+      border-top: 1px solid #e9ecef;
+    }
+
+    .footer-text {
+      font-size: 14px;
+      color: #666666;
+      margin: 0;
+    }
+
+    .footer-brand {
+      font-size: 12px;
+      color: #999999;
+      margin: 15px 0 0 0;
+    }
+
+    /* Mobile responsiveness */
+    @media only screen and (max-width: 600px) {
+      .email-container {
+        margin: 0;
+        border-radius: 0;
+      }
+
+      .header,
+      .content,
+      .footer {
+        padding: 30px 20px;
+      }
+
+      .logo {
+        font-size: 24px;
+      }
+
+      .title {
+        font-size: 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+<div class="email-container">
+  <!-- Header -->
+  <div class="header">
+    <div class="logo">
+      <span class="logo-icon"></span>
+      <span>Kaylia</span>
+    </div>
+  </div>
+
+  <!-- Content -->
+  <div class="content">
+    <div class="success-message">
+      <div class="success-icon">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3">
+          <path d="M20 6L9 17l-5-5"/>
+        </svg>
+      </div>
+      <h1 class="title">Order Confirmed!</h1>
+      <p class="subtitle">Thank you for your purchase. Your order has been successfully processed.</p>
+    </div>
+
+    <div class="order-details">
+      <h3>Order Details</h3>
+
+      <div class="detail-row">
+        <span class="detail-label">Order ID: </span>
+        <span class="detail-value" id="order-id"> #KAY-2025-[[${orderId}]]</span>
+      </div>
+
+      <div class="detail-row">
+        <span class="detail-label">Order Date: </span>
+        <span class="detail-value" id="order-date"> [[${orderDate}]]</span>
+      </div>
+
+      <div class="detail-row">
+        <span class="detail-label">Total Amount: </span>
+        <span class="detail-value total-amount" id="total-amount"> Rs [[${totalAmount}]]</span>
+      </div>
+    </div>
+
+    <p style="text-align: center; color: #666666; font-size: 14px; margin: 0;">
+      You will receive a shipping confirmation email with tracking information once your order is dispatched.
+    </p>
+  </div>
+
+  <!-- Footer -->
+  <div class="footer">
+    <p class="footer-text">
+      Thank you for choosing Kaylia Skincare for your beauty needs.
+    </p>
+    <p class="footer-brand">
+      &copy; 2025 Kaylia. All rights reserved.<br>
+      Premium skincare crafted with natural ingredients.
+    </p>
+  </div>
+</div>
+
+
+</body>
+</html>

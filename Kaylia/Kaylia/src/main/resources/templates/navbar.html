@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Navbar</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+</head>
+<body>
+
+<!-- Header -->
+<header>
+    <div class="container">
+        <div class="header-content">
+            <a href="index.html" class="logo">
+                <div class="logo-icon"></div>
+                <span class="logo-text">Kaylia</span>
+            </a>
+
+            <nav>
+                <ul class="nav-menu">
+                    <li><a th:classappend="${activePage == 'home'} ? 'active'" href="/">Home</a></li>
+                    <li><a th:classappend="${activePage == 'products'} ? 'active'" href="/products">Products</a></li>
+                    <li><a th:classappend="${activePage == 'new-arrivals'} ? 'active'" href="/new-arrivals">New Arrivals</a></li>
+                    <li id="skin-analysis-btn"><a th:classappend="${activePage == 'skin_analysis'} ? 'active'" href="/skin_analysis">Skin Analysis</a></li>
+                    <li><a th:classappend="${activePage == 'about'} ? 'active'" href="/about">About</a></li>
+                </ul>
+            </nav>
+
+            <div class="header-actions">
+                <a href="/cart" id="cart-icon" aria-label="Cart" style="margin-right: 1rem; padding-top: 5px">
+                    <img th:src="@{/images/cart.svg}" alt="Cart" width="25" height="25" >
+                </a>
+                <a href="/auth/login" id="profile-icon" aria-label="Login" style="margin-right: 1rem; padding-top: 5px">
+                    <img th:src="@{/images/profile.svg}" alt="profile" width="25" height="25">
+                </a>
+                <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle dark mode">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path class="sun" d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/>
+                        <circle class="sun" cx="12" cy="12" r="5"/>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </div>
+</header>
+
+<script th:src="@{/js/script.js}"></script>
+
+</body>
+</html>
