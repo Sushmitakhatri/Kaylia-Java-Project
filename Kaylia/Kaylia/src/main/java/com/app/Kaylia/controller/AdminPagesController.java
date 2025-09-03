@@ -98,6 +98,7 @@ public class AdminPagesController {
     }
 
     @GetMapping("/remove-product/{id}")
+    @Transactional
     public String adminRemoveProduct(@PathVariable Long id){
         productsRepo.removeProductsById(id);
 
