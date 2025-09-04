@@ -193,7 +193,7 @@ public class SkinAnalysisController {
     }
 
     /**
-     * Helper method to extract user ID from session
+     * Helper method to extract user ID from session part
      */
     private Long getUserIdFromSession(HttpSession session) {
         try {
