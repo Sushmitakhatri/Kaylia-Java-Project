@@ -135,7 +135,7 @@ public class PagesController {
         return "order-success";
     }
 
-
+//ORder History
     @GetMapping("/order-history")
     @ResponseBody
     public ResponseEntity<?> getUserOrders(HttpSession session, Model model, Map map) {
@@ -157,12 +157,10 @@ public class PagesController {
             // fetch product info from IDs
             List<Products> products = productsRepo.findAllById(order.getProductIds());
             dto.setProducts(products);
-
             orderDisplayList.add(dto);
         }
 
         model.addAttribute("pastOrders", orderDisplayList);
-
         return ResponseEntity.ok(Map.of("message","Order loaded"));
 
     }
