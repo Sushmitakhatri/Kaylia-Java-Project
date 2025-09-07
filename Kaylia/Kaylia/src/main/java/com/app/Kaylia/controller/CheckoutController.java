@@ -64,22 +64,24 @@ public class CheckoutController {
         ConfirmOrder order = new ConfirmOrder();
         order.setUserId(userId);
         order.setEmail(orderRequest.getEmail());
+
         order.setAddress(orderRequest.getAddress());
+
         order.setCity(orderRequest.getCity());
         order.setState(orderRequest.getState());
         order.setContactNo(orderRequest.getContactNo());
         order.setPaymentMethod(orderRequest.getPayment());
         order.setProductIds(productIds);
         order.setTimeOrdered(LocalDateTime.now());
+
         order.setTotalAmount(orderRequest.getTotalAmount());
 
         ConfirmOrder savedOrder = orderRepo.save(order);
 
-        // remove items from cart
+        // remove items from the cart
         cartRepo.deleteByUserId(userId);
 
         return ResponseEntity.ok(savedOrder);
     }
-
 
 }
