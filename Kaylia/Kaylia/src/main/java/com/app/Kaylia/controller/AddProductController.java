@@ -35,9 +35,12 @@ public class AddProductController {
             @RequestParam String howtouse,
             @RequestParam MultipartFile image,
             HttpSession session
+
     ) throws IOException {
         String email = (String) session.getAttribute("email");
+
         List<String> ingredientsList = Arrays.asList(ingredients.split("\\s*\\.\\s*"));
+
         List<String> benefitsList = Arrays.asList(benefits.split("\\s*\\.\\s*"));
 
         boolean addedProduct = addProductServices.addProduct(name, price, description,category, ingredientsList, benefitsList, howtouse, image, email);
