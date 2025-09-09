@@ -8,6 +8,7 @@
     <link rel="stylesheet" th:href="@{/css/styles.css}">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
     <style>
         .page-container {
             min-height: 100vh;
@@ -445,6 +446,7 @@
                         <h3>My Products</h3>
                         <a class="btn-secondary" href="/admin/manage-product">Refresh</a>
                     </div>
+
                     <div id="products-list-container">
                         <!-- Products will be loaded here -->
                         <div class="card-content">
@@ -455,12 +457,14 @@
                                         <h4 th:text="${products.name}">Vitamin C Brightening Serum</h4>
                                         <p>Rs <span th:text="${products.price}"></span></p>
                                     </div>
+
                                     <div style="display: flex; justify-content: space-between; gap: 14px" >
                                         <span class="product-status status-active">Active</span>
                                         <a th:href="@{'/admin/remove-product/' + ${products.id}}" style="margin-top: 4px">
                                             <img th:src="@{/images/bin.png}" alt="bin" style="height: 16px; width: 14px; margin-left: 14px">
                                         </a>
                                     </div>
+
                                 </div>
                                 <hr style="margin-top: 12px;margin-bottom: 12px">
                             </div>
@@ -571,6 +575,7 @@
             }
         });
     });
+
 </script>
 </body>
 </html>

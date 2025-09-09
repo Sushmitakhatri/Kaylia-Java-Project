@@ -78,10 +78,11 @@ public class AdminPagesController {
 
         User user = userRepo.findByEmail((String) session.getAttribute("email"));
 
+
         List<Products> productsList = productsRepo.findByCreatedBy(user);
 
-        model.addAttribute("products", productsList);
 
+        model.addAttribute("products", productsList);
         return "add-product";
     }
 
@@ -98,8 +99,11 @@ public class AdminPagesController {
     }
 
     @GetMapping("/remove-product/{id}")
+
     @Transactional
+
     public String adminRemoveProduct(@PathVariable Long id){
+
         productsRepo.removeProductsById(id);
 
         return "redirect:/admin/manage-product";
@@ -107,6 +111,7 @@ public class AdminPagesController {
 
     @GetMapping("/create-user")
     public String createUserPage(Model model){
+
         List<User> userList = userRepo.findAll();
 
         int totalUser = 0;
@@ -116,7 +121,9 @@ public class AdminPagesController {
 
         //to get total users and role users
         for(User user: userList){
+
             switch (user.getRole()){
+
                 case "ROLE_SUPER_ADMIN":
                     superAdmins += 1;
                     break;
@@ -143,6 +150,7 @@ public class AdminPagesController {
     }
 
     @GetMapping("/manage-user")
+
     public String manageUserPage(HttpSession session, Model model){
 
         List<User> userList = userRepo.findAll();
