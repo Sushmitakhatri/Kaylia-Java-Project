@@ -192,6 +192,7 @@ public class AdminPagesController {
 
     @GetMapping("/remove-user/{id}")
     @Transactional
+
     public String removeUser(@PathVariable int id){
 
         userRepo.removeUserByUserId(id);
@@ -200,7 +201,9 @@ public class AdminPagesController {
     }
 
     @GetMapping("/role-check")
+
     @ResponseBody
+
     public ResponseEntity<?> roleCheck(HttpSession session){
         String email = (String) session.getAttribute("email");
         System.out.println("from role check " + email);
@@ -217,8 +220,9 @@ public class AdminPagesController {
         System.out.println(theAdmin.getRole());
         return ResponseEntity.ok(Map.of("role", theAdmin.getRole()));
     }
-
+//user create
     @PostMapping("/create-user")
+
     public ResponseEntity<?> registerUser(@RequestBody RegisterUserDto newUser){
 
         Optional<User> isUser = userRepo.findUserByEmail(newUser.getEmail());
@@ -254,8 +258,9 @@ public class AdminPagesController {
         }
     }
 
-    //----------- for testing image get from db --------------------
+    //----------- for testing image get from database--------------------
     @GetMapping("/images/{id}")
+
     public ResponseEntity<byte[]> getImage(@PathVariable int id) throws Exception {
         Products products = productsRepo.findById((long) id)
                 .orElseThrow(() -> new RuntimeException("Product not found"));
@@ -272,11 +277,14 @@ public class AdminPagesController {
     }
 
     // This serves the Thymeleaf page
+
     @GetMapping("/images")
+
     public String listProducts(Model model) {
         model.addAttribute("products", productsRepo.findAll());
         return "image"; // Thymeleaf template: products.html
     }
+
 }
 
 
