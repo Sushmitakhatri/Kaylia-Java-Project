@@ -45,6 +45,7 @@ public class VendorPagesController {
 
         model.addAttribute("activeProducts", totalProducts);
         model.addAttribute("products", productsList);
+        model.addAttribute("user", activeUser.getFName() + ' ' + activeUser.getLName());
 
         return "vendor-dashboard";
     }

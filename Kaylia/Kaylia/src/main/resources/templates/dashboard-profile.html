@@ -138,7 +138,7 @@
     }
 
     .nav-item.active {
-      background: var(--gradient-rose);
+      background: hsl(var(--primary));
       color: white;
     }
 
@@ -266,7 +266,7 @@
       <!-- Sidebar Navigation -->
       <div class="sidebar">
         <div class="nav-card">
-          <a href="/dashboard-profile" class="nav-item active">
+          <a href="/dashboard-profile" class="nav-item active" style="background: hsl(var(--primary));">
             <svg class="nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
             </svg>
@@ -299,7 +299,7 @@
         <div class="content-card">
           <div class="card-content">
             <div class="profile-avatar-section">
-              <div style="margin-top: 22px" class="profile-avatar-large">U</div>
+              <div style="margin-top: 22px; background:hsl(var(--primary)" class="profile-avatar-large">U</div>
               <h3 style="font-family: 'Playfair Display', serif; margin-bottom: 0.25rem;"><span th:text="${fName}"></span> <span th:text="${lName}"></span></h3>
               <p style="color: hsl(var(--muted-foreground));">Member since 2025</p>
             </div>
@@ -338,7 +338,7 @@
           </div>
           <div class="card-content">
             <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
-              <button class="btn btn-primary">Change Password</button>
+              <a href="/auth/reset-password" class="btn btn-primary">Change Password</a>
               <a href="/auth/logout" class="btn btn-secondary">Logout</a>
             </div>
           </div>

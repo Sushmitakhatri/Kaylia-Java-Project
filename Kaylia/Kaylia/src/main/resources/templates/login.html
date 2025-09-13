@@ -163,20 +163,15 @@
     </style>
 </head>
 <body>
-    <!-- Navigation Logo -->
-    <div class="nav-logo">
-        <a href="index.html">
-            <div class="logo-icon"></div>
-            <span>Kaylia</span>
-        </a>
-    </div>
-    
+
     <div class="login-container">
         <div class="login-card">
             <div class="login-header">
                 <div class="login-logo">
-                    <div class="logo-icon"></div>
-                    <span class="logo-text">Kaylia</span>
+                    <div>
+                        <a href="/"><img th:src="@{/images/logo.png}" alt = "kaylia logo" height="55px" width="95px"></a>
+                    </div>
+
                 </div>
                 <h1 id="form-title" class="font-serif" style="font-size: 1.5rem; font-weight: 700; margin-bottom: 0.5rem;">Welcome Back</h1>
                 <p id="form-subtitle" class="text-muted">Sign in to your account to continue</p>
@@ -217,13 +212,13 @@
                             <input type="checkbox" id="remember" name="remember">
                             <label for="remember" class="form-label" style="margin: 0; font-size: 0.875rem;">Remember me</label>
                         </div>
-                        <a href="#" class="text-primary" style="font-size: 0.875rem; text-decoration: none;">Forgot password?</a>
+                        <a href="/auth/reset-password" class="text-primary" style="font-size: 0.875rem; text-decoration: none;">Reset password?</a>
                     </div>
                     
                     <button type="submit" id="submit-btn" class="btn btn-primary" style="width: 100%;">Sign In</button>
                 </form>
                 
-                <div class="divider">
+                <div style="text-align:center; margin-top:12px; margin-bottom:12px">
                     <span>Or</span>
                 </div>
                 

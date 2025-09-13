@@ -15,234 +15,243 @@
 <!-- End header -->
 
 
-    <!-- Hero Section -->
-    <section class="hero">
-        <img th:src="@{/images/slider1.png}" alt="Slider" class="hero-bg">
-        <div class="hero-content">
-            <h1>
-                Radiant Skin<br>
-                <span style="color: hsl(var(--primary-light))">Starts Here</span>
-            </h1>
-            <p>
-                Discover premium skincare crafted with natural ingredients and scientific innovation 
-                for healthy, glowing skin.
+<!-- Hero Section -->
+<section class="hero">
+    <img th:src="@{/images/slider1.png}" alt="Slider" class="hero-bg">
+    <div class="hero-content">
+        <h1>
+            Radiant Skin<br>
+            <span style="color: hsl(var(--primary))">Starts Here</span>
+        </h1>
+        <p>
+            Discover premium skincare crafted with natural ingredients and scientific innovation
+            for healthy, glowing skin.
+        </p>
+        <div class="hero-buttons">
+
+            <a href="/products" class="btn btn-primary btn-lg hero-shop-btn" style="background: hsl(var(--primary)); color: white">
+                Shop Collection
+                <svg style="margin-left: 0.5rem;" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M5 12h14M12 5l7 7-7 7"/>
+                </svg>
+            </a>
+            <a href="/about" class="btn btn-outline btn-lg" style="border-color: white; color: white;">
+                Our Story
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- Benefits Section -->
+<section class="section section-muted">
+    <div class="container">
+        <div class="text-center mb-8">
+            <h2 class="font-serif" style="font-size: 2.5rem; font-weight: 700; margin-bottom: 1rem;">
+                Why Choose Kaylia
+            </h2>
+            <p style="font-size: 1.25rem; color: hsl(var(--muted-foreground)); max-width: 32rem; margin: 0 auto;">
+                We believe in clean beauty that delivers real results
             </p>
-            <div class="hero-buttons">
-
-                <a href="/products" class="btn btn-primary btn-lg hero-shop-btn" style="background: hsl(var(--primary-light)); color: white">
-                    Shop Collection
-                    <svg style="margin-left: 0.5rem;" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M5 12h14M12 5l7 7-7 7"/>
-                    </svg>
-                </a>
-                <a href="/about" class="btn btn-outline btn-lg" style="border-color: white; color: white;">
-                    Our Story
-                </a>
-            </div>
         </div>
-    </section>
 
-    <!-- Benefits Section -->
-    <section class="section section-muted">
-        <div class="container">
-            <div class="text-center mb-8">
-                <h2 class="font-serif" style="font-size: 2.5rem; font-weight: 700; margin-bottom: 1rem;">
-                    Why Choose Kaylia
-                </h2>
-                <p style="font-size: 1.25rem; color: hsl(var(--muted-foreground)); max-width: 32rem; margin: 0 auto;">
-                    We believe in clean beauty that delivers real results
-                </p>
+        <div class="grid grid-md-3">
+            <div class="card">
+                <div class="card-content text-center">
+                    <div style="width: 4rem; height: 4rem; background: hsl(var(--primary-light)); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1.5rem;">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+                            <path d="M7 13c3 0 5.5-2.5 5.5-6S10 1 7 1 1.5 3.5 1.5 7 4 13 7 13zM22 20.6L13.4 12c-.3-.3-.7-.3-1 0L8 16.6"/>
+                        </svg>
+                    </div>
+                    <h3 style="font-weight: 600; font-size: 1.25rem; margin-bottom: 1rem;">Natural Ingredients</h3>
+                    <p class="text-muted">Carefully sourced botanicals and clean formulations</p>
+                </div>
             </div>
-            
-            <div class="grid grid-md-3">
-                <div class="card">
-                    <div class="card-content text-center">
-                        <div style="width: 4rem; height: 4rem; background: hsl(var(--primary-light)); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1.5rem;">
-                            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
-                                <path d="M7 13c3 0 5.5-2.5 5.5-6S10 1 7 1 1.5 3.5 1.5 7 4 13 7 13zM22 20.6L13.4 12c-.3-.3-.7-.3-1 0L8 16.6"/>
-                            </svg>
-                        </div>
-                        <h3 style="font-weight: 600; font-size: 1.25rem; margin-bottom: 1rem;">Natural Ingredients</h3>
-                        <p class="text-muted">Carefully sourced botanicals and clean formulations</p>
+
+            <div class="card">
+                <div class="card-content text-center">
+                    <div style="width: 4rem; height: 4rem; background: hsl(var(--primary)); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1.5rem;">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+                            <circle cx="12" cy="8" r="7"/>
+                            <polyline points="8.21,13.89 7,23 12,20 17,23 15.79,13.88"/>
+                        </svg>
                     </div>
+                    <h3 style="font-weight: 600; font-size: 1.25rem; margin-bottom: 1rem;">Dermatologist Tested</h3>
+                    <p class="text-muted">Clinically proven and recommended by skincare experts</p>
                 </div>
-                
-                <div class="card">
-                    <div class="card-content text-center">
-                        <div style="width: 4rem; height: 4rem; background: hsl(var(--primary)); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1.5rem;">
-                            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
-                                <circle cx="12" cy="8" r="7"/>
-                                <polyline points="8.21,13.89 7,23 12,20 17,23 15.79,13.88"/>
-                            </svg>
-                        </div>
-                        <h3 style="font-weight: 600; font-size: 1.25rem; margin-bottom: 1rem;">Dermatologist Tested</h3>
-                        <p class="text-muted">Clinically proven and recommended by skincare experts</p>
+            </div>
+
+            <div class="card">
+                <div class="card-content text-center">
+                    <div style="width: 4rem; height: 4rem; background: hsl(var(--primary)); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1.5rem;">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+                            <path d="M9 12l2 2 4-4"/>
+                            <path d="M21 12c-1 0-3-1-3-3s2-3 3-3 3 1 3 3-2 3-3 3"/>
+                            <path d="M3 12c1 0 3-1 3-3s-2-3-3-3-3 1-3 3 2 3 3 3"/>
+                            <path d="M9 21c0-1-1-3-3-3s-3 2-3 3 1 3 3 3 3-2 3-3"/>
+                            <path d="M15 21c0-1 1-3 3-3s3 2 3 3-1 3-3 3-3-2-3-3"/>
+                        </svg>
                     </div>
-                </div>
-                
-                <div class="card">
-                    <div class="card-content text-center">
-                        <div style="width: 4rem; height: 4rem; background: hsl(var(--primary)); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1.5rem;">
-                            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
-                                <path d="M9 12l2 2 4-4"/>
-                                <path d="M21 12c-1 0-3-1-3-3s2-3 3-3 3 1 3 3-2 3-3 3"/>
-                                <path d="M3 12c1 0 3-1 3-3s-2-3-3-3-3 1-3 3 2 3 3 3"/>
-                                <path d="M9 21c0-1-1-3-3-3s-3 2-3 3 1 3 3 3 3-2 3-3"/>
-                                <path d="M15 21c0-1 1-3 3-3s3 2 3 3-1 3-3 3-3-2-3-3"/>
-                            </svg>
-                        </div>
-                        <h3 style="font-weight: 600; font-size: 1.25rem; margin-bottom: 1rem;">Cruelty Free</h3>
-                        <p class="text-muted">Never tested on animals, always ethically made</p>
-                    </div>
+                    <h3 style="font-weight: 600; font-size: 1.25rem; margin-bottom: 1rem;">Cruelty Free</h3>
+                    <p class="text-muted">Never tested on animals, always ethically made</p>
                 </div>
             </div>
         </div>
-    </section>
+    </div>
+</section>
 
-    <!-- Featured Products -->
-    <section class="section">
-        <div class="container">
-            <div class="text-center mb-8">
-                <h2 class="font-serif" style="font-size: 2.5rem; font-weight: 700; margin-bottom: 1rem;">
-                    Customer Favorites
-                </h2>
-                <p style="font-size: 1.25rem; color: hsl(var(--muted-foreground));">
-                    Our most loved products for radiant, healthy skin
-                </p>
-            </div>
+<!-- Featured Products -->
+<section class="section">
+    <div class="container">
+        <div class="text-center mb-8">
+            <h2 class="font-serif" style="font-size: 2.5rem; font-weight: 700; margin-bottom: 1rem;">
+                Customer Favorites
+            </h2>
+            <p style="font-size: 1.25rem; color: hsl(var(--muted-foreground));">
+                Our most loved products for radiant, healthy skin
+            </p>
+        </div>
 
-            <div class="product-grid" style="max-width: 64rem; margin: 0 auto;">
-                <div class="product-card" data-category="cleansers" data-price="35" data-name="Glow Serum" data-rating="4.7">
-                    <div class="product-image" style="height:300px">
-                        <img th:src ="@{/images/serum.webp}" alt="Glow Serum">
-                        <div class="product-badge">Popular</div>
-                        <button class="product-fav" aria-label="Add to wishlist">
-                            <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
-                            </svg>
-                        </button>
-                    </div>
-                    <div class="product-info" style="padding-top:0rem; padding-bottom:0rem">
-                        <div class="star-rating">
-                            <span class="star filled">★</span>
-                            <span class="star filled">★</span>
-                            <span class="star filled">★</span>
-                            <span class="star filled">★</span>
-                            <span class="star filled">★</span>
-                            <span class="text-muted" style="margin-left: 0.5rem; font-size: 0.875rem;">(4.7)</span>
-                        </div>
-                        <div class="product-tags">Propolis extract (60%), Niacinamide, BHA(0.5%)</div>
-                        <a style="text-decoration: none" href="/product-detail">
-                            <h3 class="product-title">Glow Serum</h3>
-                        </a>
-                        <p class="product-description" style="color: hsl(var(--muted-foreground)); font-size: 0.875rem; margin: 0.2rem 0;">A honey-textured, glow-boosting serum with 60% propolis extract.</p>
-                        <div class="product-prices">
-                            <span class="product-price">$35</span>
-                        </div>
-                        <button class="btn btn-outline btn-sm" onclick="addToCart({id: 3, name: 'Gentle Foaming Cleanser', price: 35, image: 'https://images.unsplash.com/photo-1556228720-195a672e8a03?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'})">Add to Cart</button>
-                    </div>
+        <div class="product-grid" style="max-width: 64rem; margin: 0 auto;">
+            <div class="product-card" data-category="cleansers" data-price="35" data-name="Glow Serum" data-rating="4.7">
+                <div class="product-image" style="height:300px">
+                    <img th:src ="@{/images/serum.webp}" alt="Glow Serum">
+                    <div class="product-badge">Popular</div>
+                    <button class="product-fav" aria-label="Add to wishlist">
+                        <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
+                        </svg>
+                    </button>
                 </div>
-                
-                <div class="product-card" data-category="serums" data-price="45" data-name="Vitamin C Brightening Serum" data-rating="4.8">
-                    <div class="product-image">
-                        <img src="https://images.unsplash.com/photo-1556228720-195a672e8a03?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Vitamin C Brightening Serum">
-                        <div class="product-badge">Best Seller</div>
-                        <button class="product-fav" aria-label="Add to wishlist">
-                            <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
-                            </svg>
-                        </button>
+                <div class="product-info" style="padding-top:0rem; padding-bottom:0rem">
+                    <div class="star-rating">
+                        <span class="star filled">★</span>
+                        <span class="star filled">★</span>
+                        <span class="star filled">★</span>
+                        <span class="star filled">★</span>
+                        <span class="star filled">★</span>
+                        <span class="text-muted" style="margin-left: 0.5rem; font-size: 0.875rem;">(4.7)</span>
                     </div>
-                    <div class="product-info">
-                        <div class="star-rating">
-                            <span class="star filled">★</span>
-                            <span class="star filled">★</span>
-                            <span class="star filled">★</span>
-                            <span class="star filled">★</span>
-                            <span class="star filled">★</span>
-                            <span class="text-muted" style="margin-left: 0.5rem; font-size: 0.875rem;">(4.8)</span>
-                        </div>
-                        <div class="product-tags">Vitamin C, Niacinamide</div>
-                        <a href="/product-detail">
-                            <h3 class="product-title">Vitamin C Brightening Serum</h3>
-                        </a>
-                        <p class="product-description" style="color: hsl(var(--muted-foreground)); font-size: 0.875rem; margin: 0.5rem 0;">Reduces dark spots and boosts radiance</p>
-                        <div class="product-prices">
-                            <span class="product-price">$45</span>
-                        </div>
-                        <button class="btn btn-outline btn-sm" onclick="addToCart({id: 1, name: 'Vitamin C Brightening Serum', price: 45, image: 'https://images.unsplash.com/photo-1556228720-195a672e8a03?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'})">Add to Cart</button>
+                    <div class="product-tags" style="margin-bottom: 0.2rem">Propolis extract (60%), Niacinamide, BHA(0.5%)</div>
+                    <a style="text-decoration: none" href="/product-detail">
+                        <h3 class="product-title" style="margin-bottom: 0.2rem">Glow Serum</h3>
+                    </a>
+                    <p class="product-description" style="color: hsl(var(--muted-foreground)); font-size: 0.875rem; margin: 0.2rem 0;">A honey-textured, glow-boosting serum with 60% propolis extract.</p>
+                    <div class="product-prices">
+                        <span class="product-price">Rs 1300</span>
                     </div>
-                </div>
-                
-                <div class="product-card" data-category="treatments" data-price="65" data-name="Retinol Renewal Night Cream" data-rating="4.9">
-                    <div class="product-image">
-                        <img src="https://images.unsplash.com/photo-1556228720-195a672e8a03?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Retinol Renewal Night Cream">
-                        <div class="product-badge">New</div>
-                        <button class="product-fav" aria-label="Add to wishlist">
-                            <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
-                            </svg>
-                        </button>
-                    </div>
-                    <div class="product-info">
-                        <div class="star-rating">
-                            <span class="star filled">★</span>
-                            <span class="star filled">★</span>
-                            <span class="star filled">★</span>
-                            <span class="star filled">★</span>
-                            <span class="star filled">★</span>
-                            <span class="text-muted" style="margin-left: 0.5rem; font-size: 0.875rem;">(4.9)</span>
-                        </div>
-                        <div class="product-tags">Retinol, Peptides</div>
-                        <a href="/product-detail">
-                            <h3 class="product-title">Retinol Renewal Night Cream</h3>
-                        </a>
-                        <p class="product-description" style="color: hsl(var(--muted-foreground)); font-size: 0.875rem; margin: 0.5rem 0;">Advanced anti-aging with gentle retinol</p>
-                        <div class="product-prices">
-                            <span class="product-price">$65</span>
-                        </div>
-                        <button class="btn btn-outline btn-sm" onclick="addToCart({id: 2, name: 'Retinol Renewal Night Cream', price: 65, image: 'https://images.unsplash.com/photo-1556228578-dd6b68d2bf17?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'})">Add to Cart</button>
-                    </div>
+                    <button class="btn btn-outline btn-sm" >Add to Cart</button>
                 </div>
             </div>
 
+            <div class="product-card" data-category="serums" data-price="45" data-name="Vitamin C Brightening Serum" data-rating="4.8">
+                <div class="product-image">
+                    <img th:src="@{/images/redbean.webp}" alt="Vitamin C Brightening Serum">
+                    <div class="product-badge">Best Seller</div>
+                    <button class="product-fav" aria-label="Add to wishlist">
+                        <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
+                        </svg>
+                    </button>
+                </div>
+                <div class="product-info" style="padding-top: 0rem; padding-bottom: 0rem">
+                    <div class="star-rating" >
+                        <span class="star filled">★</span>
+                        <span class="star filled">★</span>
+                        <span class="star filled">★</span>
+                        <span class="star filled">★</span>
+                        <span class="star filled">★</span>
+                        <span class="text-muted" style="margin-left: 0.5rem; font-size: 0.875rem;">(4.8)</span>
+                    </div>
+                    <div class="product-tags" style="margin-bottom: 0.2rem">44% Haenam Red Bean Extract, Betaine, Panthenol, Allantoin</div>
+                    <a href="/product-detail" >
+                        <h3 class="product-title" style="margin-bottom: 0.2rem">Red Bean Water Gel</h3>
+                    </a>
+                    <p class="product-description" style="color: hsl(var(--muted-foreground)); font-size: 0.875rem; margin: 0.5rem 0;margin-bottom: 0rem">A lightweight water-gel moisturizer specially made for oily skin....</p>
+                    <div class="product-prices">
+                        <span class="product-price">Rs 1600</span>
+                    </div>
+                    <button class="btn btn-outline btn-sm" >Add to Cart</button>
+                </div>
+            </div>
+
+            <div class="product-card" data-category="serums" data-price="45" data-name="Rice 70 Milky Toner" data-rating="4.8">
+                <div class="product-image">
+                    <img th:src="@{/images/milkytoner.webp}" alt="Rice 70 Milky Toner">
+                    <div class="product-badge">Best Seller</div>
+                    <button class="product-fav" aria-label="Add to wishlist">
+                        <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
+                        </svg>
+                    </button>
+                </div>
+                <div class="product-info" style="padding-top: 0rem; padding-bottom: 0rem">
+                    <div class="star-rating" >
+                        <span class="star filled">★</span>
+                        <span class="star filled">★</span>
+                        <span class="star filled">★</span>
+                        <span class="star filled">★</span>
+                        <span class="star filled">★</span>
+                        <span class="text-muted" style="margin-left: 0.5rem; font-size: 0.875rem;">(4.8)</span>
+                    </div>
+                    <div class="product-tags" style="margin-bottom: 0.2rem">Rice Water, Niacinamide, Ceramides, Panthenol</div>
+                    <a href="/product-detail" >
+                        <h3 class="product-title" style="margin-bottom: 0.2rem">Rice 70 Milky Toner</h3>
+                    </a>
+                    <p class="product-description" style="color: hsl(var(--muted-foreground)); font-size: 0.875rem; margin: 0.5rem 0;margin-bottom: 0rem">A lightweight milky toner with 70% rice extract and niacinamide.</p>
+                    <div class="product-prices">
+                        <span class="product-price">Rs 1600</span>
+                    </div>
+                    <button class="btn btn-outline btn-sm" >Add to Cart</button>
+                </div>
+            </div>
+            </div>
             <div class="text-center mt-8">
                 <a href="/products" class="btn btn-primary btn-lg">
-                    View All Products
+                                         View All Products
                     <svg style="margin-left: 0.5rem;" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                         <path d="M5 12h14M12 5l7 7-7 7"/>
                     </svg>
                 </a>
             </div>
         </div>
-    </section>
+</section>
 
-    <!-- CTA Section -->
-    <section class="cta-section section" >
-        <img th:src="@{/images/slider2.png}" alt="CTA Background" class="cta-bg-image"/>
-        <div class="container">
-            <div class="cta-content">
-                <h2 class="font-serif" style="font-size: 2.5rem; font-weight: 700; margin-bottom: 1.5rem;">
-                    Ready to Transform Your Skin?
-                </h2>
-                <p style="font-size: 1.25rem; margin-bottom: 2rem; max-width: 32rem; margin-left: auto; margin-right: auto; opacity: 0.9;">
-                    Join thousands of customers who have discovered the power of clean, 
-                    effective skincare.
-                </p>
-                <a href="/new-arrivals" class="btn btn-lg" style="background: white; color: hsl(var(--primary)); padding: 0.75rem 2rem;">
-                    Discover New Arrivals
-                    <svg style="margin-left: 0.5rem;" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M5 12h14M12 5l7 7-7 7"/>
-                    </svg>
-                </a>
-            </div>
+<!-- CTA Section -->
+<section class="cta-section section" style="position: relative; overflow: hidden;">
+    <!-- Background Image -->
+    <img th:src="@{/images/index1.jpg}" alt="CTA Background" class="cta-bg-image"
+         style="width: 100%; height: 100%; object-fit: cover; position: absolute; top: 0; left: 0; z-index: -2;"/>
+
+    <!-- Pink Overlay -->
+    <div class="pink-overlay"
+         style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+                background: rgba(255, 192, 203, 0.4); z-index: -1;">
+    </div>
+
+    <!-- Content -->
+    <div class="container" style="position: relative; z-index: 1; text-align: center; color: white;">
+        <div class="cta-content">
+            <h2 class="font-serif" style="font-size: 2.5rem; font-weight: 700; margin-bottom: 1.5rem;">
+                Ready to Transform Your Skin?
+            </h2>
+            <p style="font-size: 1.25rem; margin-bottom: 2rem; max-width: 32rem; margin-left: auto; margin-right: auto; opacity: 0.9;">
+                Join thousands of customers who have discovered the power of clean,
+                effective skincare.
+            </p>
+            <a href="/new-arrivals" class="btn btn-lg"
+               style="background: hsl(var(--primary )); color: white; padding: 0.75rem 2rem;">
+                Discover New Arrivals
+                <svg style="margin-left: 0.5rem;" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M5 12h14M12 5l7 7-7 7"/>
+                </svg>
+            </a>
         </div>
-    </section>
+    </div>
+</section>
 
+<!-- Footer -->
+<div th:insert="footer.html"></div>
 
-    <!-- Footer -->
-    <div th:insert="footer.html"></div>
-
-    <script th:src="@{/js/script.js}"></script>
+<script th:src="@{/js/script.js}"></script>
 </body>
 </html>

@@ -416,7 +416,7 @@
                         </svg>
                         <span>Wishlist</span>
                     </a>
-                    <a href="/dashboard-skin-analysis" class="nav-item active">
+                    <a href="/dashboard-skin-analysis" class="nav-item active" style="background: hsl(var(--primary));">
                         <svg class="nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/>
                         </svg>
@@ -427,59 +427,72 @@
 
             <!-- Main Content Area -->
             <div class="main-content">
-                <!-- Current Analysis Results -->
-                <div class="content-card">
+                <!-- If analysis exists -->
+                <div class="content-card" th:if="${skinAnalysisDetail != null}">
                     <div class="card-header">
                         <h3 class="card-title">Your Skin Profile</h3>
-                        <p class="card-description">Analysis completed on January 28, 2024</p>
+                        <p class="card-description">Analysis completed on
+                            <span th:text="${skinAnalysisDetail.createdAt}">January 28, 2024</span>
+                        </p>
                     </div>
                     <div class="card-content">
                         <div class="skin-analysis-card">
-                            <div class="analysis-icon">
+                            <div class="analysis">
                                 <svg width="32" height="32" fill="white" viewBox="0 0 24 24">
-                                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+                                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48
+                                 10 10 10 10-4.48 10-10S17.52
+                                 2 12 2zm-2 15l-5-5 1.41-1.41L10
+                                 14.17l7.59-7.59L19 8l-9 9z"/>
                                 </svg>
                             </div>
-                            <div class="skin-type-badge">Combination Skin</div>
-                            <h4 style="font-family: 'Playfair Display', serif; font-size: 1.5rem; margin-bottom: 1rem;">Your Personalized Results</h4>
-                            <p style="margin-bottom: 1.5rem; color: hsl(var(--muted-foreground));">Based on your analysis, we've identified your skin type and created personalized recommendations for your skincare routine.</p>
+                            <div class="skin-type-badge" th:text="${skinAnalysisDetail.skinType}">Combination Skin</div>
+                            <h4 style="font-family: 'Playfair Display', serif; font-size: 1.5rem; margin-bottom: 1rem;">
+                                Your Personalized Results
+                            </h4>
+                            <p style="margin-bottom: 1.5rem; color: hsl(var(--muted-foreground));">
+                                Based on your analysis, we've identified your skin type and created personalized recommendations.
+                            </p>
 
                             <!-- Skin Concerns -->
                             <div class="concerns-grid">
-
                                 <div class="concern-item">
-                                    <div class="concern-icon">
-                                        <h5>Skin Type</h5>
-                                    </div>
-                                    <div style="font-size: 0.875rem; font-weight: 500;" th:text="${skinAnalysisDetail.skinType}">Large Pores</div>
+                                    <div style="margin-bottom: 12px"><h5>Skin Type</h5></div>
+                                    <div style="font-size: 0.875rem; font-weight: 500;"
+                                         th:text="${skinAnalysisDetail.skinType}">Large Pores</div>
                                 </div>
 
                                 <div class="concern-item" th:each="concerns : ${skinAnalysisDetail.concerns}">
-                                    <div class="concern-icon">
-                                        <h5>Concerns</h5>
-                                    </div>
+                                    <div style="margin-bottom: 12px"><h5>Concerns</h5></div>
                                     <div style="font-size: 0.875rem; font-weight: 500;" th:text="${concerns}">Oily T-Zone</div>
                                 </div>
 
                                 <div class="concern-item">
-                                    <div class="concern-icon">
-                                        <h5>User Experience</h5>
-                                    </div>
-                                    <div style="font-size: 0.875rem; font-weight: 500;" th:text="${skinAnalysisDetail.experience}">Dry Cheeks</div>
+                                    <div style="margin-bottom: 12px"><h5>User Experience</h5></div>
+                                    <div style="font-size: 0.875rem; font-weight: 500;"
+                                         th:text="${skinAnalysisDetail.experience}">Dry Cheeks</div>
                                 </div>
 
                                 <div class="concern-item" th:each="goals : ${skinAnalysisDetail.goals}">
-                                    <div class="concern-icon">
-                                        <h5>User Goals</h5>
-                                    </div>
+                                    <div style="margin-bottom: 12px"><h5>User Goals</h5></div>
                                     <div style="font-size: 0.875rem; font-weight: 500;" th:text="${goals}">Fine Lines</div>
                                 </div>
-
                             </div>
-
                         </div>
                     </div>
                 </div>
+
+                <!-- If analysis is NOT available -->
+                <div class="content-card" th:unless="${skinAnalysisDetail != null}">
+                    <div class="card-header">
+                        <h3 class="card-title">Skin Analysis</h3>
+                    </div>
+                    <div class="card-content">
+                        <p style="color: hsl(var(--muted-foreground)); font-size: 1rem;">
+                            You have not taken a skin analysis yet. Please complete the skin test to view personalized results.
+                        </p>
+                    </div>
+                </div>
+            </div>
 
                 <!-- Recommended Routine -->
                 <div class="content-card">

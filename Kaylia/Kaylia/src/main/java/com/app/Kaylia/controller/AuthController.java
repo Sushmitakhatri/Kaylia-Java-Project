@@ -1,6 +1,7 @@
 package com.app.Kaylia.controller;
 
 import com.app.Kaylia.dto.LoginDto;
+import com.app.Kaylia.dto.ResetPasswordData;
 import com.app.Kaylia.model.User;
 import com.app.Kaylia.repository.UserRepo;
 import com.app.Kaylia.services.AuthServices;
@@ -10,6 +11,7 @@ import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -126,4 +128,50 @@ public class AuthController {
         ));
 
     }
+
+    @GetMapping("/reset-password")
+    public String passwordRestPage(){
+        return "reset-password";
+    }
+
+    @PostMapping("/reset-password")
+    public String passwordReset(@ModelAttribute ResetPasswordData resetPasswordData){
+        System.out.println("DTO values: " + resetPasswordData.getEmail() + " , " + resetPasswordData.getCurrentPassword());
+        User user = userRepo.findByEmail(resetPasswordData.getEmail());
+
+        BCryptPasswordEncoder bCrypt = new BCryptPasswordEncoder();
+
+        String password = bCrypt.encode(resetPasswordData.getCurrentPassword());
+
+        user.setPassword(password);
+
+        userRepo.save(user);
+
+        return "login";
+    }
+
+    @PostMapping("/reset-user-verify")
+    public String resetPasswordPage(@ModelAttribute ResetPasswordData resetPasswordData, Model model) {
+        System.out.println("email: " + resetPasswordData.getEmail() +
+                " password: " + resetPasswordData.getCurrentPassword());
+
+        String email = resetPasswordData.getEmail();
+        Optional<User> user = userRepo.findUserByEmail(email);
+
+        if (user.isPresent()) {
+            User activeUser = user.get();
+
+            BCryptPasswordEncoder bCrypt = new BCryptPasswordEncoder();
+
+            if (bCrypt.matches(resetPasswordData.getCurrentPassword(), activeUser.getPassword())) {
+                model.addAttribute("user", resetPasswordData.getEmail());
+                return "password-reset";
+            }
+        }
+
+        model.addAttribute("error", "User not found or invalid password");
+        return "reset-password";
+    }
+
+
 }

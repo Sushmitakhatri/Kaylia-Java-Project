@@ -30,4 +30,7 @@ public interface SkinAnalysisRepository extends JpaRepository<SkinAnalysis, Long
     void deleteByUser(User user);
 
     SkinAnalysis findByUser(User user);
+
+    Optional<SkinAnalysis> findSkinAnalysisByUser(User user);
+
 }

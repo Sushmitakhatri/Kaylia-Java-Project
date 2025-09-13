@@ -350,7 +350,7 @@
                         </svg>
                         <span>My Orders</span>
                     </a>
-                    <a href="/dashboard-wishlist" class="nav-item active">
+                    <a href="/dashboard-wishlist" class="nav-item active" style="background: hsl(var(--primary));">
                         <svg class="nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
                         </svg>
@@ -382,9 +382,9 @@
                                         <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>
                                     </svg>
                                 </button>
-                                <img src="https://images.unsplash.com/photo-1556228720-195a672e8a03?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Hyaluronic Acid Serum" class="wishlist-image">
+                                <img th:src="@{/images/Anua serum.webp}" alt="Anua Serum" class="wishlist-image">
                                 <div class="wishlist-content">
-                                    <h4 class="wishlist-title">Hyaluronic Acid Serum</h4>
+                                    <h4 class="wishlist-title">Anua Serum</h4>
                                     <p class="wishlist-description">Intense hydration serum with pure hyaluronic acid for plump, dewy skin.</p>
                                     <p class="wishlist-price">$55.00</p>
                                     <div class="wishlist-actions">
@@ -400,9 +400,9 @@
                                         <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>
                                     </svg>
                                 </button>
-                                <img src="https://images.unsplash.com/photo-1556228578-dd6b68d2bf17?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Niacinamide Serum" class="wishlist-image">
+                                <img th:src="@{/images/anua cream.webp}" alt="Niacinamide Serum" class="wishlist-image">
                                 <div class="wishlist-content">
-                                    <h4 class="wishlist-title">Niacinamide Serum</h4>
+                                    <h4 class="wishlist-title">Anua Cream</h4>
                                     <p class="wishlist-description">Pore-refining serum with 10% niacinamide to minimize appearance of pores.</p>
                                     <p class="wishlist-price">$42.00 <span style="text-decoration: line-through; color: hsl(var(--muted-foreground)); font-size: 0.875rem;">$48.00</span></p>
                                     <div class="wishlist-actions">
@@ -418,9 +418,9 @@
                                         <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>
                                     </svg>
                                 </button>
-                                <img src="https://images.unsplash.com/photo-1556228453-efd6c1ff04f6?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Eye Cream" class="wishlist-image">
+                                <img th:src="@{/images/eyepatch.webp}" alt="Eye Cream" class="wishlist-image">
                                 <div class="wishlist-content">
-                                    <h4 class="wishlist-title">Revitalizing Eye Cream</h4>
+                                    <h4 class="wishlist-title">Hydrogel Eye Patch</h4>
                                     <p class="wishlist-description">Anti-aging eye cream with peptides and caffeine to reduce puffiness.</p>
                                     <p class="wishlist-price">$75.00</p>
                                     <div class="wishlist-actions">
@@ -430,59 +430,7 @@
                                 </div>
                             </div>
 
-                            <div class="wishlist-item">
-                                <button class="remove-wishlist" onclick="removeFromWishlist(this)" title="Remove from wishlist">
-                                    <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24">
-                                        <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>
-                                    </svg>
-                                </button>
-                                <img src="https://images.unsplash.com/photo-1556228720-195a672e8a03?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Vitamin C Serum" class="wishlist-image">
-                                <div class="wishlist-content">
-                                    <h4 class="wishlist-title">Vitamin C Brightening Serum</h4>
-                                    <p class="wishlist-description">20% Vitamin C serum for brightening and evening skin tone.</p>
-                                    <p class="wishlist-price">$65.00 <span style="text-decoration: line-through; color: hsl(var(--muted-foreground)); font-size: 0.875rem;">$72.00</span></p>
-                                    <div class="wishlist-actions">
-                                        <button class="btn btn-primary btn-sm" style="flex: 1;">Add to Cart</button>
-                                        <button class="btn btn-outline btn-sm">View Details</button>
-                                    </div>
-                                </div>
-                            </div>
 
-                            <div class="wishlist-item">
-                                <button class="remove-wishlist" onclick="removeFromWishlist(this)" title="Remove from wishlist">
-                                    <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24">
-                                        <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>
-                                    </svg>
-                                </button>
-                                <img src="https://images.unsplash.com/photo-1556228578-dd6b68d2bf17?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Night Moisturizer" class="wishlist-image">
-                                <div class="wishlist-content">
-                                    <h4 class="wishlist-title">Overnight Recovery Cream</h4>
-                                    <p class="wishlist-description">Rich night cream with ceramides and peptides for overnight repair.</p>
-                                    <p class="wishlist-price">$58.00</p>
-                                    <div class="wishlist-actions">
-                                        <button class="btn btn-primary btn-sm" style="flex: 1;">Add to Cart</button>
-                                        <button class="btn btn-outline btn-sm">View Details</button>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="wishlist-item">
-                                <button class="remove-wishlist" onclick="removeFromWishlist(this)" title="Remove from wishlist">
-                                    <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24">
-                                        <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>
-                                    </svg>
-                                </button>
-                                <img src="https://images.unsplash.com/photo-1556228453-efd6c1ff04f6?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Sunscreen" class="wishlist-image">
-                                <div class="wishlist-content">
-                                    <h4 class="wishlist-title">Daily Protection SPF 50</h4>
-                                    <p class="wishlist-description">Lightweight, non-greasy sunscreen with broad spectrum protection.</p>
-                                    <p class="wishlist-price">$35.00 <span style="text-decoration: line-through; color: hsl(var(--muted-foreground)); font-size: 0.875rem;">$42.00</span></p>
-                                    <div class="wishlist-actions">
-                                        <button class="btn btn-primary btn-sm" style="flex: 1;">Add to Cart</button>
-                                        <button class="btn btn-outline btn-sm">View Details</button>
-                                    </div>
-                                </div>
-                            </div>
                         </div>
                     </div>
                 </div>

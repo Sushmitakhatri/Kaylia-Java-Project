@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 
@@ -133,12 +134,14 @@ public class DashboardController {
     public String dashboardSkinAnalysis(Model model, HttpSession session){
         User user = userRepo.findByEmail((String)session.getAttribute("email"));
 
-        SkinAnalysis skinAnalysis = skinAnalysisRepository.findByUser(user);
+        Optional<SkinAnalysis> skinAnalysis = skinAnalysisRepository.findSkinAnalysisByUser(user);
 
-        System.out.println("users skin analysis id: " + skinAnalysis.getId());
-
-        model.addAttribute("skinAnalysisDetail", skinAnalysis);
-
+        if (skinAnalysis.isPresent()) {
+            SkinAnalysis analysis = skinAnalysis.get();
+            model.addAttribute("skinAnalysisDetail", analysis);
+            return "dashboard-skin-analysis";
+        }
+        model.addAttribute("skinAnalysisDetail", null);
         return "dashboard-skin-analysis";
     }
 

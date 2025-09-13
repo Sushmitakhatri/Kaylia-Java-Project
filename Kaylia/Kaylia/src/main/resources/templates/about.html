@@ -165,19 +165,30 @@
     <!-- Header -->
     <header th:insert="navbar.html"></header>
     <!-- End header -->
-
     <!-- Hero Section -->
-    <section class="hero-about">
-        <div class="container">
-            <div class="text-center">
-                <h1 class="font-serif" style="font-size: 3.5rem; font-weight: 700; margin-bottom: 1.5rem;">
-                    Our Story
-                </h1>
-                <p style="font-size: 1.25rem; color: hsl(var(--muted-foreground)); max-width: 40rem; margin: 0 auto 2rem;">
-                    Founded on the belief that everyone deserves access to clean, effective skincare, 
-                    Kaylia combines nature's finest ingredients with cutting-edge science.
-                </p>
-            </div>
+    <section class="hero-about"
+             th:style="'background: url(' + @{/images/index2.jpg} + ') no-repeat center center/cover;
+                    height: 60vh;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    text-align: center;
+                    position: relative; overflow: hidden;'">
+
+        <!-- Tint Overlay -->
+        <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+                background: rgba(255, 192, 203, 0.65); z-index: 0;">
+        </div>
+
+        <!-- Content -->
+        <div class="container" style="color: white; padding: 2rem; border-radius: 1rem; position: relative; z-index: 1;">
+            <h1 class="font-serif" style="font-size: 3.5rem; font-weight: 700; margin-bottom: 1.5rem;">
+                Our Story
+            </h1>
+            <p style="font-size: 1.25rem; color: #f0f0f0; max-width: 40rem; margin: 0 auto 2rem;">
+                Founded on the belief that everyone deserves access to clean, effective skincare,
+                Kaylia combines nature's finest ingredients with cutting-edge science.
+            </p>
         </div>
     </section>
 
@@ -201,7 +212,7 @@
                     </p>
                 </div>
                 <div>
-                    <img src="https://images.unsplash.com/photo-1556228720-195a672e8a03?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" 
+                    <img th:src = "@{/images/aboutus2.jpg}"
                          alt="Kaylia skincare products" 
                          style="width: 100%; height: 400px; object-fit: cover; border-radius: 0.5rem;">
                 </div>
@@ -247,7 +258,7 @@
             
             <div class="values-grid">
                 <div class="value-item">
-                    <div class="value-icon">
+                    <div class="value-icon" style="background:hsl(var(--primary))">
                         <svg width="24" height="24" fill="none" stroke="white" stroke-width="2" viewBox="0 0 24 24">
                             <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
                         </svg>
@@ -257,7 +268,7 @@
                 </div>
                 
                 <div class="value-item">
-                    <div class="value-icon">
+                    <div class="value-icon" style="background:hsl(var(--primary))">
                         <svg width="24" height="24" fill="none" stroke="white" stroke-width="2" viewBox="0 0 24 24">
                             <path d="M7 13c3 0 5.5-2.5 5.5-6S10 1 7 1 1.5 3.5 1.5 7 4 13 7 13zM22 20.6L13.4 12c-.3-.3-.7-.3-1 0L8 16.6"/>
                         </svg>
@@ -267,7 +278,7 @@
                 </div>
                 
                 <div class="value-item">
-                    <div class="value-icon">
+                    <div class="value-icon" style="background:hsl(var(--primary))">
                         <svg width="24" height="24" fill="none" stroke="white" stroke-width="2" viewBox="0 0 24 24">
                             <path d="M9 12l2 2 4-4"/>
                             <circle cx="12" cy="12" r="9"/>
@@ -331,50 +342,22 @@
             </div>
         </div>
     </section>
-
-    <!-- Team Section -->
-    <section class="section">
-        <div class="container">
-            <div class="text-center mb-8">
-                <h2 class="font-serif" style="font-size: 2.5rem; font-weight: 700; margin-bottom: 1rem;">
-                    Meet Our Team
-                </h2>
-                <p style="font-size: 1.25rem; color: hsl(var(--muted-foreground)); max-width: 32rem; margin: 0 auto;">
-                    The passionate individuals behind Kaylia
-                </p>
-            </div>
-            
-            <div class="team-grid">
-                <div class="team-member">
-                    <img src="https://images.unsplash.com/photo-1494790108755-2616b612b0e5?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" 
-                         alt="Sarah Johnson" class="team-photo">
-                    <div class="team-name">Sarah Johnson</div>
-                    <div class="team-role">Founder & CEO</div>
-                    <p class="text-muted">Dermatologist with 15+ years of experience in skincare formulation and clean beauty advocacy.</p>
-                </div>
-                
-                <div class="team-member">
-                    <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" 
-                         alt="Michael Chen" class="team-photo">
-                    <div class="team-name">Michael Chen</div>
-                    <div class="team-role">Chief Science Officer</div>
-                    <p class="text-muted">Biochemist specializing in natural ingredient research and product efficacy testing.</p>
-                </div>
-                
-                <div class="team-member">
-                    <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" 
-                         alt="Emma Rodriguez" class="team-photo">
-                    <div class="team-name">Emma Rodriguez</div>
-                    <div class="team-role">Head of Sustainability</div>
-                    <p class="text-muted">Environmental scientist dedicated to sustainable practices and eco-friendly packaging solutions.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
     <!-- CTA Section -->
-    <section class="cta-section section" style="background-image: url('https://images.unsplash.com/photo-1556228453-efd6c1ff04f6?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80')">
-        <div class="container">
+    <section class="cta-section section"
+             th:style="'background-image: url(' + @{/images/banner.jpg} + ');
+                    background-size: cover;
+                    background-position: center;
+                    background-repeat: no-repeat;
+                    position: relative;
+                    overflow: hidden;'">
+
+        <!-- Pink Tint Overlay -->
+        <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+                background: rgba(255, 192, 203, 0.35); z-index: 0;">
+        </div>
+
+        <!-- Content -->
+        <div class="container" style="position: relative; z-index: 1; text-align: center; color: white;">
             <div class="cta-content">
                 <h2 class="font-serif" style="font-size: 2.5rem; font-weight: 700; margin-bottom: 1.5rem;">
                     Join the Kaylia Community
@@ -382,7 +365,8 @@
                 <p style="font-size: 1.25rem; margin-bottom: 2rem; max-width: 32rem; margin-left: auto; margin-right: auto; opacity: 0.9;">
                     Experience the difference that clean, effective skincare can make for your skin.
                 </p>
-                <a href="products.html" class="btn btn-lg" style="background: white; color: hsl(var(--primary)); padding: 0.75rem 2rem;">
+                <a href="products.html" class="btn btn-lg"
+                   style="background: white; color: hsl(var(--primary)); padding: 0.75rem 2rem;">
                     Shop Our Products
                     <svg style="margin-left: 0.5rem;" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                         <path d="M5 12h14M12 5l7 7-7 7"/>
